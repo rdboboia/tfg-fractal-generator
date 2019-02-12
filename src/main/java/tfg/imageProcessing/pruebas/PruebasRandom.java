@@ -1,4 +1,4 @@
-package pruebas;
+package tfg.imageProcessing.pruebas;
 
 public class PruebasRandom {
 

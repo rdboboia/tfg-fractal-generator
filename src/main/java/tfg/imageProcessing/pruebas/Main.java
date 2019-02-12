@@ -1,4 +1,4 @@
-package pruebas;
+package tfg.imageProcessing.pruebas;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
