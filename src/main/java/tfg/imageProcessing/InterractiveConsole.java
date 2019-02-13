@@ -1,8 +1,8 @@
 package tfg.imageProcessing;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
-
-import tfg.imageProcessing.ImageProcessor.ProcessingMode;
 
 public class InterractiveConsole {
 	private Scanner s;
@@ -21,7 +21,7 @@ public class InterractiveConsole {
 	
 	public void menu() {
 		int option = -1;
-		while (option < 1 || option > 3) {
+		while (option != 3) {
 			System.out.println("Menu:");
 			System.out.println("\t1) Invert colors");
 			System.out.println("\t2) Convert to gray scale");
@@ -29,27 +29,40 @@ public class InterractiveConsole {
 			
 			try {
 				option = Integer.parseInt(s.nextLine());
+				ImageManager.ProcessingMode mode = null;
 				
 				switch (option) {
 					case 1:
-						// TODO
-						getInputFilePath();
-						getOutputFilePath();
-						new ImageProcessor().process(inputFilePath, outputFilePath, ProcessingMode.negative);
+						mode = ImageManager.ProcessingMode.NEGATIVE;
 						break;
 					case 2:
-						// TODO
-						System.out.println("Not yet implemented!");
+						mode = ImageManager.ProcessingMode.GRAYSCALE;
 						break;
 					case 3:
 						System.out.println("Exiting...");
 						System.exit(0);
 						break;
-			
-					default:
-						System.out.println("Wrong option. Choose again!");
-						break;
-					}
+				}
+				
+				getInputFilePath();
+				getOutputFilePath();
+				ImageManager manager;
+				
+				
+				
+				try {
+					manager = new ImageManager(inputFilePath, outputFilePath);
+					manager.processImage(mode);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
 			} catch (NumberFormatException e) {
 				System.out.println("Only numbers are accepted as an input!");
 			}

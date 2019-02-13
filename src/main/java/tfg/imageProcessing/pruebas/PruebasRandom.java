@@ -1,13 +1,31 @@
 package tfg.imageProcessing.pruebas;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 public class PruebasRandom {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String s = "archivo.1.bmp";
+		System.out.println((-2 & ~-256));
+		System.out.println(1 % 256);
 		
-		int i = s.lastIndexOf('.');
-		System.out.println(s.substring(i+1));
+//		try {
+//			BufferedImage org = ImageIO.read(new File("Z:\\img.bmp"));
+//			
+//			BufferedImage img = new BufferedImage(org.getWidth() * 16, org.getHeight() * 16, org.getType());
+//			Graphics2D g = img.createGraphics();
+//			g.drawImage(org, 0, 0, org.getWidth() * 16, org.getHeight() * 16, null);
+//			g.dispose();
+//			
+//			ImageIO.write(img, "bmp", new File("Z:\\out.bmp"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 }

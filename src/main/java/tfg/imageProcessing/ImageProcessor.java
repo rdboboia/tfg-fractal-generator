@@ -1,77 +1,44 @@
 package tfg.imageProcessing;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 public class ImageProcessor {
-	public enum ProcessingMode {negative, grayscale}
-	
-	private int height;
-	private int width;
-	private int imageType;
-	private boolean hasAlphaChannel;
-	
-	private String inputImagePath;
-	private String outputImagePath;
-	
-	private BufferedImage imageData;
-	private byte[] pixels;
-	
-	
-	public void process(String inputImagePath, String outputImagePath, ProcessingMode mode) {
-		this.inputImagePath = inputImagePath;
-		this.outputImagePath = outputImagePath;
-		
-		pixels = getImagePixelArray();
+	public static boolean process(byte[] pixels, ImageManager.ProcessingMode mode, boolean hasAlphaChannel) {
+		int step;
+		if (hasAlphaChannel)
+			step = 4;
+		else
+			step = 3;
 		
 		switch (mode) {
-			case negative:
-				neg();
+			case NEGATIVE:
+				invertColors(pixels);
 				break;
-			case grayscale:
-				System.out.println("Not implemented yet");
+			case GRAYSCALE:
+				convertToGrayscale(pixels, step);
 				break;
 		}
 		
-		exportResult(pixels);
+		return true;
 	}
 	
-	
-	
-	private byte[] getImagePixelArray() {
-		try {
-			File inputFile = new File(inputImagePath);
-			imageData = ImageIO.read(inputFile);
-			
-//			height = imageData.getHeight();
-//			width = imageData.getWidth();
-//			imageType = imageData.getType();
-			hasAlphaChannel = imageData.getAlphaRaster() != null;
-			
-			return ((DataBufferByte) imageData.getRaster().getDataBuffer()).getData();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	private void neg() {
+	private static void invertColors(byte[] pixels) {
 		for (int i = 0 ; i < pixels.length ; i++) {
-//			pixels[i] = (byte) (255 - (pixels[i] % 256));
-			pixels[i] = (byte) (255 - pixels[i]);
+			pixels[i] = (byte) (256 - pixels[i]);
 		}
 	}
 	
-	private void exportResult(byte[] pixels) {
-		try {
-			File outputFile = new File(outputImagePath);
-			ImageIO.write(imageData, "bmp", outputFile);
-		} catch (IOException e) {
-			e.printStackTrace();
+	private static void convertToGrayscale(byte[] pixels, int step) {
+		int sum;
+		
+		for (int i = 0 ; i < pixels.length ; i += step) {
+			sum = 0;
+			
+			for (int j = 0 ; j < step ; j++)
+				sum += (pixels[i+j] & ~-256);
+			
+			sum /= step;
+			
+			for (int j = 0 ; j < step ; j++)
+				pixels[i+j] = (byte) sum;
 		}
 	}
 }

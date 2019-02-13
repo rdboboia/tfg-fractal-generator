@@ -17,9 +17,9 @@ public class App
 	 */
 	
 	public static void main(String[] args) {
-//		// FIXME: testing purposes
-//		Launcher.launchInterractiveConsole();
-//		System.exit(0);
+//													// FIXME: testing purposes
+//													Launcher.launchInterractiveConsole();
+//													System.exit(0);
 		
 		if (args.length == 0) {
 			Launcher.launchGUI();
