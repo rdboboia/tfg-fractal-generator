@@ -10,10 +10,12 @@ import javax.imageio.ImageIO;
 public class PruebasRandom {
 
 	public static void main(String[] args) {
-		System.out.println((-2 & ~-256));
-		System.out.println(1 % 256);
+//		System.out.println((-2 & ~-256));
+//		System.out.println(1 % 256);
 		
 //		try {
+//			System.out.println("Empiezo");
+//			
 //			BufferedImage org = ImageIO.read(new File("Z:\\img.bmp"));
 //			
 //			BufferedImage img = new BufferedImage(org.getWidth() * 16, org.getHeight() * 16, org.getType());
@@ -22,6 +24,8 @@ public class PruebasRandom {
 //			g.dispose();
 //			
 //			ImageIO.write(img, "bmp", new File("Z:\\out.bmp"));
+//			
+//			System.out.println("FIN! :D");
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
