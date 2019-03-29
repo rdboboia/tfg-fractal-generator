@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ImageManager {
-	public enum ProcessingMode {NEGATIVE, GRAYSCALE}
+	public enum ProcessingMode {NEGATIVE, GRAYSCALE, CONDITIONAL_NEGATIVE}
 	
 	private FileManager fileManager;
 	

@@ -12,7 +12,7 @@ public class PruebasRendimiento {
 //			ImageManager manager = new ImageManager("Z:\\img.bmp", "Z:\\out.bmp");
 //			manager.processImage(ProcessingMode.GRAYSCALE);	
 			
-			new ImageManager("Z:\\img.bmp", "Z:\\out.bmp").processImage(ProcessingMode.GRAYSCALE);
+			new ImageManager("Z:\\in.bmp", "Z:\\out.png").processImage(ProcessingMode.CONDITIONAL_NEGATIVE);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

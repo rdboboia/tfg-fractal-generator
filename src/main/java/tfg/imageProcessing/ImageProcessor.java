@@ -12,6 +12,9 @@ public class ImageProcessor {
 			case NEGATIVE:
 				invertColors(pixels);
 				break;
+			case CONDITIONAL_NEGATIVE:
+				invertSomeColors(pixels);
+				break;
 			case GRAYSCALE:
 				convertToGrayscale(pixels, step);
 				break;
@@ -22,7 +25,29 @@ public class ImageProcessor {
 	
 	private static void invertColors(byte[] pixels) {
 		for (int i = 0 ; i < pixels.length ; i++) {
-			pixels[i] = (byte) (256 - pixels[i]);
+			pixels[i] = (byte) (255 - pixels[i]);
+		}
+	}
+	
+	private static void invertSomeColors(byte[] pixels) {
+		int step = 3;
+		
+		for (int i = 0 ; i < pixels.length ; i += step) {
+//			if (i < 45_000_000) {
+				if (!(Byte.toUnsignedInt(pixels[i]) >= 125)) {
+					// Nothing
+				} else {
+					pixels[i] = (byte) (255 - pixels[i]);
+					pixels[i+1] = (byte) (255 - pixels[i+1]);
+					pixels[i+2] = (byte) (255 - pixels[i+2]);
+				}
+//			} else {
+//				if (pixels[i] == pixels[i+1] && pixels[i+1] == pixels[i+2]) {
+//					pixels[i] = (byte) (255 - pixels[i]);
+//					pixels[i+1] = (byte) (255 - pixels[i+1]);
+//					pixels[i+2] = (byte) (255 - pixels[i+2]);
+//				}
+//			}
 		}
 	}
 	
