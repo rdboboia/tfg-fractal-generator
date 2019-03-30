@@ -31,7 +31,7 @@ public class MandelbrotsetGenerator {
 	private int width;
 	
 	/**
-	 * Main constructor for the Mandelbrot set generator.
+	 * Main constructor for the {@link MandelbrotsetGenerator}.
 	 * It stores the data in the image that receives.
 	 * As for the depth it can be anything, but since the Hue of the HSB color
 	 * model has 360 degrees it should be at least 360. However, lower values
