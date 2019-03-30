@@ -19,31 +19,31 @@ public class ImageExport {
 	/**
 	 * Bitmap format. No compression. Creates large files.
 	 */
-	public static final String BMP = "BMP";
+	public static final String BMP = "bmp";
 	/**
 	 * Joint Photographic Experts Group format (the same as JPG).
 	 * <br>
 	 * Note: JPEG was used on MacIntosh since they weren't limited to 3
 	 * character extensions while Windows used JPG instead.
 	 */
-	public static final String JPEG = "JPEG";
+	public static final String JPEG = "jpeg";
 	/**
 	 * Joint Photographic Experts Group format (the same as JPEG).
 	 * Compressed image format. Not recommended for images where each
 	 * individual pixel has valuable information.
 	 */
-	public static final String JPG = "JPG";
+	public static final String JPG = "jpg";
 	/**
 	 * Portable Network Graphics format. Lossless compression.
 	 * A good alternative to the BMP format since it reduces drastically
 	 * the file size while maintaining the quality.
 	 */
-	public static final String PNG = "PNG";
+	public static final String PNG = "png";
 	/**
 	 * Wireless Application Protocol Bitmap format. It's a monochrome
 	 * image format. It might lead to interesting results.
 	 */
-	public static final String WBMP = "WBMP";
+	public static final String WBMP = "wbmp";
 	
 	/**
 	 * Private constructor. Only static methods are provided, so no instance
