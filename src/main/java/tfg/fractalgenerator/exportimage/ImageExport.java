@@ -77,7 +77,7 @@ public class ImageExport {
 	 * {@link javax.imageio.ImageIO ImageIO} class.
 	 */
 	public static void export(BufferedImage image, String format, String folderPath, String fileName, boolean override) throws IOException {
-		if (Arrays.binarySearch(ImageIO.getWriterFormatNames(), format) < 0) {
+		if (!Arrays.asList(ImageIO.getWriterFormatNames()).contains(format)) {
 			throw new InvalidParameterException("The given format is not supported. Check supported formats.");
 		}
 		
