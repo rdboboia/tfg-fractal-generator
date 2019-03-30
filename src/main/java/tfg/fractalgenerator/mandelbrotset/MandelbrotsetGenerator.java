@@ -57,7 +57,7 @@ public class MandelbrotsetGenerator {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				double x0 = (j - width / 2d) * 4d / width;
-				double y0 = (j - height / 2d) * 4d / width;
+				double y0 = (i - height / 2d) * 4d / width;
 				double x = 0;
 				double y = 0;
 				int iteration = 0;
@@ -68,8 +68,11 @@ public class MandelbrotsetGenerator {
 					x = xtemp;
 					iteration++;
 				}
-
-				img.setRGB(j, i, Color.HSBtoRGB(iteration/(float)depth, 1, iteration/(iteration+8f)));
+				
+				if (iteration < depth)
+					img.setRGB(j, i, Color.HSBtoRGB(iteration/(float)depth, 1, iteration/(iteration+8f)));
+				else
+					img.setRGB(j, i, 0);
 			}
 		}
 	}
