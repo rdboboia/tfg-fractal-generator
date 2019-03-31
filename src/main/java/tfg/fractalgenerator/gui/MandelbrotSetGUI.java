@@ -19,15 +19,54 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the main Window where the application runs. It uses a {@link CardLayout}
+ * layout which contains all the different views or sections that the application
+ * has, each one defined in its own {@code Class} which extends {@link JPanel}.
+ * <br>
+ * It uses the Singleton pattern so that only one instance can be made which is
+ * meant to be accessed from all the different views since it provides a public
+ * method to change between cards or views. This way any view can lead into any
+ * other view without much trouble.
+ * <br>
+ * This class doesn't seem very test friendly, but some slight modifications
+ * were made to make testing possible.
+ * 
+ * @author -$BOSS$-
+ */
 public class MandelbrotSetGUI extends JFrame {
+	/**
+	 * Maintains the reference to the one and only instance of the
+	 * {@code Class} {@link MandelbrotSetGUI}.
+	 */
 	private static MandelbrotSetGUI instance;
 	
+	/**
+	 * Serial version number. Using the default one.
+	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Main content panel for the {@link MandelbrotSetGUI} {@code Frame}.
+	 */
 	private JPanel contentPanel;
+	/**
+	 * A list with all the panels that are inside the main panel.
+	 */
 	private List<String> panels;
 	
+	/**
+	 * Initial size for the main panel that is also used in all sub-panels.
+	 * <br>
+	 * Also useful for development since WindowBuilder has its limitations.
+	 */
 	public static final Dimension size = new Dimension(1280, 720);
 	
+	/**
+	 * Main method to get the one and only possible instance of
+	 * {@link MandelbrotSetGUI} {@code Class}, using the Singleton pattern.
+	 * 
+	 * @return the {@link MandelbrotSetGUI} instance.
+	 */
 	public static MandelbrotSetGUI getInstance() {
 		if (instance == null)
 			instance = new MandelbrotSetGUI();
@@ -35,6 +74,17 @@ public class MandelbrotSetGUI extends JFrame {
 		return instance;
 	}
 	
+	/**
+	 * Public method designed to facilitate to the programmer the navigation
+	 * between views. Making use of the {@link CardLayout}, it changes the
+	 * current card to the card whose name is passed as a parameter.
+	 * 
+	 * @param panelName the name of the card to be displayed.
+	 * @return {@code true} if the name was found in the panel names list and
+	 * the new card is set to be displayed.
+	 * @throws InvalidParameterException if there was no name match in
+	 * the panel names list with the given name parameter.
+	 */
 	public boolean changeCard(String panelName) {
 		if (!panels.contains(panelName))
 			throw new InvalidParameterException("The panel name provided was not found in the panel names list.");
@@ -43,6 +93,15 @@ public class MandelbrotSetGUI extends JFrame {
 		return true;
 	}
 	
+	/**
+	 * This method is not meant to be used outside the class. It was created
+	 * to make possible the testing of both branches of the {@code try-catch}
+	 * block.
+	 * @param className the desired look and feel class name.
+	 * @return {@code true} if a look and feel was found bases on the name
+	 * provided and it was changed. Otherwise, {@code false} is returned and
+	 * a {@link JOptionPane} with an error message is shown.
+	 */
 	boolean changeLookAndFeel(String className) {
 		try {
 			UIManager.setLookAndFeel(className);
@@ -53,6 +112,12 @@ public class MandelbrotSetGUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * Initialization of the main Window. It sets its size, changes the
+	 * {@code LookAndFeel} for all the views and set some more size and placement
+	 * variables. It instantiates all the sub-views (cards) and creates the
+	 * list containing all their names.
+	 */
 	private MandelbrotSetGUI() {
 		this.setSize(size);
 		
