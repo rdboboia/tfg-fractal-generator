@@ -74,6 +74,9 @@ public class MandelbrotsetGenerator {
 				else
 					img.setRGB(j, i, 0);
 			}
+			
+//			if (i % (height/100) == 0)
+//				System.out.println(((float)i / height) * 100 + "% completado");
 		}
 	}
 }
