@@ -1,6 +1,9 @@
 package tfg.fractalgenerator.gui.panels;
 
 import javax.swing.JPanel;
+
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
@@ -31,6 +34,7 @@ public class ModeSelectionPanel extends JPanel {
 
 	/**
 	 * Initialization of the Panel and it's layout.
+	 * It also contains the {@link ActionListener} for each button.
 	 */
 	public ModeSelectionPanel() {
 		this.setSize(MandelbrotSetGUI.size);

@@ -1,5 +1,7 @@
 package tfg.fractalgenerator.gui.panels;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -29,6 +31,7 @@ public class PanelTemplate extends JPanel {
 	
 	/**
 	 * Initialization of the Panel and it's layout.
+	 * It also contains the {@link ActionListener} for each button.
 	 */
 	public PanelTemplate() {
 		this.setSize(MandelbrotSetGUI.size);
