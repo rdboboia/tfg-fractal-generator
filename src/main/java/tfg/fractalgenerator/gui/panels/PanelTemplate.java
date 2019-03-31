@@ -7,11 +7,29 @@ import javax.swing.GroupLayout.Alignment;
 
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
 
+/**
+ * Template for each of the views of the card layout group. It contains a
+ * button to go to another view (previous one, for example).
+ * 
+ * @author -$BOSS$-
+ */
 public class PanelTemplate extends JPanel {
+	/**
+	 * Serial version number. Using the default one.
+	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Static reference to the name of this class which is used as the name
+	 * of the component. The name is based on the {@code Class}'s name. Useful
+	 * for the card layout since it makes a lot easier to have access to a
+	 * component's name. 
+	 */
 	public static final String NAME = PanelTemplate.class.getSimpleName();
 	
+	/**
+	 * Initialization of the Panel and it's layout.
+	 */
 	public PanelTemplate() {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
