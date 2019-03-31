@@ -13,13 +13,18 @@ import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 import tfg.fractalgenerator.gui.panels.RealtimeViewPanel;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MandelbrotSetGUI extends JFrame {
 	private static MandelbrotSetGUI instance;
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
+	private List<String> panels;
 	
 	public static final Dimension size = new Dimension(1280, 720);
 	
@@ -30,19 +35,28 @@ public class MandelbrotSetGUI extends JFrame {
 		return instance;
 	}
 	
-	public void changeCard(String panelName) {
+	public boolean changeCard(String panelName) {
+		if (!panels.contains(panelName))
+			throw new InvalidParameterException("The panel name provided was not found in the panel names list.");
+		
 		((CardLayout) contentPanel.getLayout()).show(contentPanel, panelName);
+		return true;
+	}
+	
+	boolean changeLookAndFeel(String className) {
+		try {
+			UIManager.setLookAndFeel(className);
+			return true;
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+			JOptionPane.showMessageDialog(this, "SystemUI Design could not be loaded.", "SystemUI Design error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 	}
 	
 	private MandelbrotSetGUI() {
 		this.setSize(size);
 		
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//			throw new UnsupportedLookAndFeelException("prueba");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			JOptionPane.showMessageDialog(this, "SystemUI Design could not be loaded.", "SystemUI Design error", JOptionPane.ERROR_MESSAGE);
-		}
+		changeLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
@@ -62,5 +76,11 @@ public class MandelbrotSetGUI extends JFrame {
 		
 		JPanel languageSelectionPanel = new LanguageSelectionPanel();
 		contentPanel.add(languageSelectionPanel, LanguageSelectionPanel.NAME);
+		
+		panels = new ArrayList<>();
+		Component[] components = contentPanel.getComponents();
+		for (int i = 0 ; i < components.length ; i++) {
+			panels.add(components[i].getName());
+		}
 	}
 }
