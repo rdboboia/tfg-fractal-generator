@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 public class FractalMandelbrot {
 
 	public static void main(String[] args) {
-		int width = 19200;
-		int height = 10800;
+		int width = 1920;
+		int height = 1080;
 		int max = 256;
 		
 		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
