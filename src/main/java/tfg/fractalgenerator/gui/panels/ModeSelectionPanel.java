@@ -15,6 +15,7 @@ public class ModeSelectionPanel extends JPanel {
 
 	public ModeSelectionPanel() {
 		this.setSize(MandelbrotSetGUI.size);
+		this.setName(NAME);
 		
 		JButton btnNewButton = new JButton("Visualización en tiempo real");
 		btnNewButton.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(RealtimeViewPanel.NAME));

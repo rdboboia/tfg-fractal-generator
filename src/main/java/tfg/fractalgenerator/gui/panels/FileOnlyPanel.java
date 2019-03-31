@@ -14,6 +14,7 @@ public class FileOnlyPanel extends JPanel {
 
 	public FileOnlyPanel() {
 		this.setSize(MandelbrotSetGUI.size);
+		this.setName(NAME);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));

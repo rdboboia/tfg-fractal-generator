@@ -34,6 +34,7 @@ public class RealtimeViewPanel extends JPanel {
 	
 	public RealtimeViewPanel() {
 		this.setSize(MandelbrotSetGUI.size);
+		this.setName(NAME);
 		
 		lblNewLabel = new JLabel("");
 		
