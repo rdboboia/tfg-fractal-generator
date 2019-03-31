@@ -3,10 +3,12 @@ package tfg.fractalgenerator.gui;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.InvalidParameterException;
+import java.time.Duration;
 
 import javax.swing.UIManager;
 
 import org.junit.jupiter.api.Test;
+import org.junit.rules.Timeout;
 
 import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 
@@ -20,8 +22,10 @@ class MandelbrotSetGUITest {
 
 	@Test
 	void incorrectLookAndFeelClassNameTest() {
-		assertFalse(MandelbrotSetGUI.getInstance().changeLookAndFeel("!legit-class-name"),
-				"The look and feel shoudl fail to change and an error message should appear.");
+		assertTimeoutPreemptively(Duration.ofSeconds(5), () ->
+			assertFalse(MandelbrotSetGUI.getInstance().changeLookAndFeel("!legit-class-name"),
+				"The look and feel shoudl fail to change and an error message should appear.")
+		);
 	}
 
 	@Test
