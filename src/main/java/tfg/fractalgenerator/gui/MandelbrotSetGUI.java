@@ -131,16 +131,16 @@ public class MandelbrotSetGUI extends JFrame {
 		contentPanel.setLayout(new CardLayout(0, 0));
 		
 		JPanel modeSelectionPanel = new ModeSelectionPanel();
-		contentPanel.add(modeSelectionPanel, ModeSelectionPanel.NAME);
+		contentPanel.add(modeSelectionPanel, modeSelectionPanel.getName());
 		
 		JPanel realtimeViewPanel = new RealtimeViewPanel();
-		contentPanel.add(realtimeViewPanel, RealtimeViewPanel.NAME);
+		contentPanel.add(realtimeViewPanel, realtimeViewPanel.getName());
 		
 		JPanel fileOnlyPanel = new FileOnlyPanel();
-		contentPanel.add(fileOnlyPanel, FileOnlyPanel.NAME);
+		contentPanel.add(fileOnlyPanel, fileOnlyPanel.getName());
 		
 		JPanel languageSelectionPanel = new LanguageSelectionPanel();
-		contentPanel.add(languageSelectionPanel, LanguageSelectionPanel.NAME);
+		contentPanel.add(languageSelectionPanel, languageSelectionPanel.getName());
 		
 		panels = new ArrayList<>();
 		Component[] components = contentPanel.getComponents();
