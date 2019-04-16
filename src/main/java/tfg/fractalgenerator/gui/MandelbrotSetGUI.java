@@ -3,8 +3,6 @@ package tfg.fractalgenerator.gui;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import tfg.fractalgenerator.gui.panels.FileOnlyPanel;
@@ -94,25 +92,6 @@ public class MandelbrotSetGUI extends JFrame {
 	}
 	
 	/**
-	 * This method is not meant to be used outside the class. It was created
-	 * to make possible the testing of both branches of the {@code try-catch}
-	 * block.
-	 * @param className the desired look and feel class name.
-	 * @return {@code true} if a look and feel was found bases on the name
-	 * provided and it was changed. Otherwise, {@code false} is returned and
-	 * a {@link JOptionPane} with an error message is shown.
-	 */
-	boolean changeLookAndFeel(String className) {
-		try {
-			UIManager.setLookAndFeel(className);
-			return true;
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-			JOptionPane.showMessageDialog(this, "SystemUI Design could not be loaded.", "SystemUI Design error", JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-	}
-	
-	/**
 	 * Initialization of the main Window. It sets its size, changes the
 	 * {@code LookAndFeel} for all the views and set some more size and placement
 	 * variables. It instantiates all the sub-views (cards) and creates the
@@ -121,7 +100,9 @@ public class MandelbrotSetGUI extends JFrame {
 	private MandelbrotSetGUI() {
 		this.setSize(size);
 		
-		changeLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		if (!LookAndFeelChanger.useSystemLookAndFeel()) {
+			JOptionPane.showMessageDialog(this, "SystemUI Design could not be loaded.", "SystemUI Design error", JOptionPane.ERROR_MESSAGE);
+		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);

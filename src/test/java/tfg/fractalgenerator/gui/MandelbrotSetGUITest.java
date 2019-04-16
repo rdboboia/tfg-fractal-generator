@@ -4,28 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.InvalidParameterException;
 
-import javax.swing.UIManager;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 
 class MandelbrotSetGUITest {
-
-	@Test
-	void correctLookAndFeelClassNameTest() {
-		assertTrue(MandelbrotSetGUI.getInstance().changeLookAndFeel(UIManager.getSystemLookAndFeelClassName()),
-				"The look and feel should change correctly");
-	}
-	
-	@Disabled
-	@Test
-	void incorrectLookAndFeelClassNameTest() {
-		assertFalse(MandelbrotSetGUI.getInstance().changeLookAndFeel("!legit-class-name"),
-				"The look and feel shoudl fail to change and an error message should appear.");
-	}
-
 	@Test
 	void changeCardMethodTest() {
 		assertTrue(MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME),
