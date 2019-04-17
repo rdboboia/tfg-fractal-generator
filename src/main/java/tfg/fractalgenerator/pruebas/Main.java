@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import tfg.fractalgenerator.exportimage.ImageExport;
+import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGenerator;
 
 public class Main {
@@ -17,7 +18,7 @@ public class Main {
 		
 		try {
 			System.out.println("Exportando imagen...");
-			ImageExport.export(img, ImageExport.BMP, "Z:", "mandelbrotset", true);
+			ImageExport.export(img, ImageFormat.PNG, "Z:", "mandelbrotset", true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

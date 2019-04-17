@@ -15,36 +15,7 @@ import javax.imageio.ImageIO;
  * 
  * @author -$BOSS$-
  */
-public class ImageExport {
-	/**
-	 * Bitmap format. No compression. Creates large files.
-	 */
-	public static final String BMP = "bmp";
-	/**
-	 * Joint Photographic Experts Group format (the same as JPG).
-	 * <br>
-	 * Note: JPEG was used on MacIntosh since they weren't limited to 3
-	 * character extensions while Windows used JPG instead.
-	 */
-	public static final String JPEG = "jpeg";
-	/**
-	 * Joint Photographic Experts Group format (the same as JPEG).
-	 * Compressed image format. Not recommended for images where each
-	 * individual pixel has valuable information.
-	 */
-	public static final String JPG = "jpg";
-	/**
-	 * Portable Network Graphics format. Lossless compression.
-	 * A good alternative to the BMP format since it reduces drastically
-	 * the file size while maintaining the quality.
-	 */
-	public static final String PNG = "png";
-	/**
-	 * Wireless Application Protocol Bitmap format. It's a monochrome
-	 * image format. It might lead to interesting results.
-	 */
-	public static final String WBMP = "wbmp";
-	
+public class ImageExport {	
 	/**
 	 * Private constructor. Only static methods are provided, so no instance
 	 * of this class is needed.
@@ -53,16 +24,17 @@ public class ImageExport {
 	}
 	
 	/**
-	 * Main method of the class {@link ImageExport}. If the override parameter
-	 * is false it checks if the file already exists in the given path and
-	 * throws an
+	 * Main method of the class {@link ImageExport}. It checks if the extension
+	 * is already included in the file name and removes it if necessary.  If the
+	 * override parameter is false it checks if the file already exists in the
+	 * given path and throws an
 	 * {@link java.nio.file.FileAlreadyExistsException FileAlreadyExistsException}
 	 * if it does. Otherwise, it attempts to write the file using the write
 	 * method of the {@link javax.imageio.ImageIO ImageIO} class. It does not
 	 * treat it's exception; it is thrown upwards.
 	 * 
 	 * @param image the image to be written.
-	 * @param format the format of the image.
+	 * @param imageFormat the format of the image of type {@link ImageFormat}.
 	 * @param folderPath the path to the folder where the file should be created.
 	 * @param fileName the name of the file.
 	 * @param override whether to override an already existing file.
@@ -76,9 +48,15 @@ public class ImageExport {
 	 * @throws IOException if an error occurs during writing by the
 	 * {@link javax.imageio.ImageIO ImageIO} class.
 	 */
-	public static void export(BufferedImage image, String format, String folderPath, String fileName, boolean override) throws IOException {
+	public static void export(BufferedImage image, ImageFormat imageFormat, String folderPath, String fileName, boolean override) throws IOException {
+		String format = ImageFormatParser.getImageFormat(imageFormat);
+		
 		if (!Arrays.asList(ImageIO.getWriterFormatNames()).contains(format)) {
 			throw new InvalidParameterException("The given format is not supported. Check supported formats.");
+		}
+		
+		if (fileName.toLowerCase().endsWith(format)) {
+			fileName = fileName.substring(0, fileName.length() - 4);
 		}
 		
 		File f = new File(folderPath, fileName + "." + format);

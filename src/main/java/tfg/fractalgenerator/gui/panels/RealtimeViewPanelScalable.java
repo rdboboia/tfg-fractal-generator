@@ -2,13 +2,12 @@ package tfg.fractalgenerator.gui.panels;
 
 import javax.swing.JPanel;
 
-import tfg.fractalgenerator.exportimage.ImageExport;
+import tfg.fractalgenerator.exportimage.ImageFormat;
+import tfg.fractalgenerator.gui.FileSaver;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGeneratorScalable;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.file.Paths;
 
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -17,10 +16,6 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.FileDialog;
-import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,7 +24,6 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JToggleButton;
-import java.awt.event.ActionEvent;
 
 /**
  * This view takes care of the Mandelbrot's Set generation and it's real time
@@ -137,7 +131,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		btnGenerar.addActionListener(e -> actualizarFractal());
 		btnExportar = new JButton("Exportar");
 		btnExportar.setEnabled(false);
-		btnExportar.addActionListener(e -> saveFile());
+		btnExportar.addActionListener(e -> FileSaver.saveFile(image, ImageFormat.PNG));
 		
 		JButton buttonZoomIn = new JButton("+");
 		buttonZoomIn.addActionListener(e -> zoomIn());
@@ -238,38 +232,6 @@ public class RealtimeViewPanelScalable extends JPanel {
 		if (btnGenerar.isEnabled() && zoom > 0.005) {
 			zoom /= 2;
 			actualizarFractal();
-		}
-	}
-
-	/**
-	 * Somewhat complex function (too many branches) to take care of the file
-	 * saving process. It displays a file selector dialog, then it checks if
-	 * the user selected a file by checking if the file returned is {@code null}.
-	 * It checks if the extension is already included in the file name and
-	 * removes it if necessary. If a file with the same name already exists it
-	 * prompts the user for override confirmation.
-	 */
-	private void saveFile() {
-		try {
-			FileDialog d = new FileDialog(new Frame(), "Guardar como");
-			d.setVisible(true);
-
-			String fileName = d.getFile();
-			if (fileName != null) {
-				if (fileName.toLowerCase().endsWith(ImageExport.PNG)) {
-					fileName = fileName.substring(0, fileName.length() - 4);
-				}
-				
-				if (Paths.get(d.getDirectory() + "\\" + d.getFile()).toFile().exists()) {
-					if (JOptionPane.showConfirmDialog(this, "¿Desea sobreescribir el archivo?", "El archivo ya existe", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-						ImageExport.export(image, ImageExport.PNG, d.getDirectory(), fileName, true);
-					}
-				} else {
-					ImageExport.export(image, ImageExport.PNG, d.getDirectory(), fileName, false);
-				}
-			}
-		} catch (IOException e1) {
-			JOptionPane.showMessageDialog(this, "No se pudo guardar el archivo.", "Error al guardar", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
