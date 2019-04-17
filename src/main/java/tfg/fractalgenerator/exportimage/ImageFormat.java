@@ -28,10 +28,5 @@ public enum ImageFormat {
 	 * A good alternative to the BMP format since it reduces drastically
 	 * the file size while maintaining the quality.
 	 */
-	PNG,
-	/**
-	 * Wireless Application Protocol Bitmap format. It's a monochrome
-	 * image format. It might lead to interesting results.
-	 */
-	WBMP
+	PNG
 }

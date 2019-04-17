@@ -34,9 +34,6 @@ public class ImageFormatParser {
 			case PNG:
 				format = "png";
 				break;
-			case WBMP:
-				format = "wbmp";
-				break;
 			default:
 				format = "unsupported";
 				break;

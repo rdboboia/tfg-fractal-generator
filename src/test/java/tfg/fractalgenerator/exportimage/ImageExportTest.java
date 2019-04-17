@@ -95,7 +95,6 @@ class ImageExportTest {
 			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.JPEG, "Z:\\", "fileFormatTest", false);
 			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.JPG, "Z:\\", "fileFormatTest", false);
 			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "fileFormatTest", false);
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.WBMP, "Z:\\", "fileFormatTest", false);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
@@ -105,7 +104,6 @@ class ImageExportTest {
 			assertTrue(Files.deleteIfExists(Paths.get("Z:\\fileFormatTest.jpeg")));
 			assertTrue(Files.deleteIfExists(Paths.get("Z:\\fileFormatTest.jpg")));
 			assertTrue(Files.deleteIfExists(Paths.get("Z:\\fileFormatTest.png")));
-			assertTrue(Files.deleteIfExists(Paths.get("Z:\\fileFormatTest.wbmp")));
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
