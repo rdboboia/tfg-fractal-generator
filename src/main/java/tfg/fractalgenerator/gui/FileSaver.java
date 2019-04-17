@@ -67,7 +67,7 @@ public class FileSaver {
 	}
 	
 	/**
-	 * Removes the extension from the file name.
+	 * Removes the extension from the file name if it already exists.
 	 * @param fileName the file name to be checked.
 	 * @param extension the extension to be removed.
 	 * @return the file name without the extension.
