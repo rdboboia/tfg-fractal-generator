@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+import tfg.fractalgenerator.gui.FileSaver;
+
 /**
  * A short module to export images. It's main functionality is based on the
  * {@link javax.imageio.ImageIO ImageIO} class.
@@ -25,9 +27,9 @@ public class ImageExport {
 	
 	/**
 	 * Main method of the class {@link ImageExport}. It checks if the extension
-	 * is already included in the file name and removes it if necessary.  If the
-	 * override parameter is false it checks if the file already exists in the
-	 * given path and throws an
+	 * is already included in the file name and removes it if necessary using a 
+	 * method from the {@link FileSaver} class. If the override parameter is false
+	 * it checks if the file already exists in the given path and throws an
 	 * {@link java.nio.file.FileAlreadyExistsException FileAlreadyExistsException}
 	 * if it does. Otherwise, it attempts to write the file using the write
 	 * method of the {@link javax.imageio.ImageIO ImageIO} class. It does not
@@ -55,9 +57,7 @@ public class ImageExport {
 			throw new InvalidParameterException("The given format is not supported. Check supported formats.");
 		}
 		
-		if (fileName.toLowerCase().endsWith(format)) {
-			fileName = fileName.substring(0, fileName.length() - 4);
-		}
+		fileName = FileSaver.removeFileExtensionIfAlreadyExists(fileName, format);
 		
 		File f = new File(folderPath, fileName + "." + format);
 		
