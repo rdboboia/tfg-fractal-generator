@@ -53,7 +53,7 @@ public class MandelbrotDynamicImageV4 extends JFrame {
 				int width = lblNewLabel.getWidth();
 				int height = lblNewLabel.getHeight();
 				int max = 256;
-				int max_color = 256;
+//				int max_color = 256;
 				int white = 256*256*256 - 1;
 
 				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

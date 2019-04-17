@@ -3,13 +3,11 @@ package tfg.fractalMandelbrot.pruebas;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 import javax.swing.JLabel;
 
 public class MandelbrotDynamicImageV5 extends JFrame {
@@ -58,11 +56,11 @@ public class MandelbrotDynamicImageV5 extends JFrame {
 				int maxHue = 360;
 				int maxBrightness = 100;
 				int max = maxHue * maxBrightness ;
-				int max_color = 256;
+//				int max_color = 256;
 				int white = 256*256*256 - 1;
 
 				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-				int[] rgbPixelData = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
+//				int[] rgbPixelData = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 
 				double x0, y0, x, y, xtemp, ytemp;
 				int iteration;

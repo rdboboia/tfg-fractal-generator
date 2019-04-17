@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import java.awt.ScrollPane;
 
 public class MandelbrotDynamicImageV2 extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -52,7 +50,7 @@ public class MandelbrotDynamicImageV2 extends JFrame {
 				int width = lblNewLabel.getWidth();
 				int height = lblNewLabel.getHeight();
 				int max = 256;
-				int max_color = 256 * 256 * 256;
+//				int max_color = 256 * 256 * 256;
 
 				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
