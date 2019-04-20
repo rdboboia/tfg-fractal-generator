@@ -7,7 +7,7 @@ import tfg.fractalgenerator.gui.MandelbrotSetGUI;
  * 
  * @author -$BOSS$-
  */
-public class App {
+public class MandelbrotsetGeneratorApp {
 	/**
 	 * Main method for starting the application.
 	 * It launches the GUI which for now is the only way to use the application.

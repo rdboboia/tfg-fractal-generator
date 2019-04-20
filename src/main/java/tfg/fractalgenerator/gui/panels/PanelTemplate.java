@@ -37,19 +37,19 @@ public class PanelTemplate extends JPanel {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
+		JButton btnReturn = new JButton("Volver");
+		btnReturn.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(btnVolver, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(1180, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(btnVolver)
+					.addComponent(btnReturn)
 					.addContainerGap(697, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);

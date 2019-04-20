@@ -41,22 +41,22 @@ public class ModeSelectionPanel extends JPanel {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
 		
-		JButton btnVisualizacionTiempoReal = new JButton("Visualización en tiempo real");
-		btnVisualizacionTiempoReal.setFont(new Font("Tahoma", Font.BOLD, 24));
-		btnVisualizacionTiempoReal.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(RealtimeViewPanel.NAME));
+		JButton btnRealTimeView = new JButton("Visualización en tiempo real");
+		btnRealTimeView.setFont(new Font("Tahoma", Font.BOLD, 24));
+		btnRealTimeView.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(RealtimeViewPanel.NAME));
 		
-		JButton btnSoloExportarA = new JButton("Solo exportar a imagen");
-		btnSoloExportarA.setFont(new Font("Tahoma", Font.BOLD, 24));
-		btnSoloExportarA.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(FileOnlyPanel.NAME));
+		JButton btnGenerateAndExport = new JButton("Solo exportar a imagen");
+		btnGenerateAndExport.setFont(new Font("Tahoma", Font.BOLD, 24));
+		btnGenerateAndExport.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(FileOnlyPanel.NAME));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(btnVisualizacionTiempoReal, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+					.addComponent(btnRealTimeView, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
 					.addGap(10)
-					.addComponent(btnSoloExportarA, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+					.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -64,8 +64,8 @@ public class ModeSelectionPanel extends JPanel {
 				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnSoloExportarA, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
-						.addComponent(btnVisualizacionTiempoReal, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
+						.addComponent(btnGenerateAndExport, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addComponent(btnRealTimeView, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		setLayout(groupLayout);

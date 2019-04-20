@@ -72,18 +72,18 @@ public class RealtimeViewPanelScalable extends JPanel {
 	 * A {@link JLabel} is used as a container {@link Component} to display
 	 * the image on the {@link JPanel} view.
 	 */
-	private JLabel lblImageCointainer;
+	private JLabel lblImageContainer;
 	
 	/**
 	 * Button for starting the generation process.
 	 */
-	private JButton btnGenerar;
+	private JButton btnGenerate;
 	/**
 	 * Button for exporting the image in it's current state to a file which
 	 * will display a file selector window to select the path and filename.
 	 */
-	private JButton btnExportar;
-	private JSpinner spinner;
+	private JButton btnExport;
+	private JSpinner spinnerDepth;
 	private JToggleButton tglbtnVariabledepthcolor;
 	
 	/**
@@ -94,13 +94,13 @@ public class RealtimeViewPanelScalable extends JPanel {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
 		
-		lblImageCointainer = new JLabel("");
-		lblImageCointainer.addMouseListener(new MouseAdapter() {
+		lblImageContainer = new JLabel("");
+		lblImageContainer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (btnGenerar.isEnabled()) {
-					double centerx = lblImageCointainer.getWidth() / 2d;
-					double centery = lblImageCointainer.getHeight() / 2d;
+				if (btnGenerate.isEnabled()) {
+					double centerx = lblImageContainer.getWidth() / 2d;
+					double centery = lblImageContainer.getHeight() / 2d;
 					
 					posx += (e.getX() - centerx) / zoom;
 					posy += (e.getY() - centery) / zoom;
@@ -109,13 +109,13 @@ public class RealtimeViewPanelScalable extends JPanel {
 				}
 			}
 		});
-		lblImageCointainer.addMouseWheelListener(e -> {
-			if (btnGenerar.isEnabled()) {
+		lblImageContainer.addMouseWheelListener(e -> {
+			if (btnGenerate.isEnabled()) {
 				if (e.getWheelRotation() > 0)
 					zoomOut();
 				else {
-					double centerx = lblImageCointainer.getWidth() / 2d;
-					double centery = lblImageCointainer.getHeight() / 2d;
+					double centerx = lblImageContainer.getWidth() / 2d;
+					double centery = lblImageContainer.getHeight() / 2d;
 					
 					posx += (e.getX() - centerx) / (zoom*2);
 					posy += (e.getY() - centery) / (zoom*2);
@@ -125,32 +125,32 @@ public class RealtimeViewPanelScalable extends JPanel {
 			}
 		});
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
-		btnGenerar = new JButton("Generar");
-		btnGenerar.addActionListener(e -> actualizarFractal());
-		btnExportar = new JButton("Exportar");
-		btnExportar.setEnabled(false);
-		btnExportar.addActionListener(e -> FileSaver.saveFile(image, ImageFormat.PNG));
+		JButton btnReturn = new JButton("Volver");
+		btnReturn.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
+		btnGenerate = new JButton("Generar");
+		btnGenerate.addActionListener(e -> actualizarFractal());
+		btnExport = new JButton("Exportar");
+		btnExport.setEnabled(false);
+		btnExport.addActionListener(e -> FileSaver.saveFile(image, ImageFormat.PNG));
 		
-		JButton buttonZoomIn = new JButton("+");
-		buttonZoomIn.addActionListener(e -> zoomIn());
+		JButton btnZoomIn = new JButton("+");
+		btnZoomIn.addActionListener(e -> zoomIn());
 		
-		JButton buttonZoomOut = new JButton("-");
-		buttonZoomOut.addActionListener(e -> zoomOut());
+		JButton btnZoomOut = new JButton("-");
+		btnZoomOut.addActionListener(e -> zoomOut());
 		
-		JButton btnRestablecer = new JButton("Restablecer");
-		btnRestablecer.addActionListener(e -> restoreStatus());
+		JButton btnRestoreDefaults = new JButton("Restablecer");
+		btnRestoreDefaults.addActionListener(e -> restoreStatus());
 		
-		JLabel lblProfunidad = new JLabel("Profunidad:");
+		JLabel lblDepth = new JLabel("Profunidad:");
 		
-		spinner = new JSpinner();
-		spinner.addChangeListener(e -> {
-			if (btnGenerar.isEnabled()) {
+		spinnerDepth = new JSpinner();
+		spinnerDepth.addChangeListener(e -> {
+			if (btnGenerate.isEnabled()) {
 				actualizarFractal();
 			}
 		});
-		spinner.setModel(new SpinnerNumberModel(360, 1, null, 32));
+		spinnerDepth.setModel(new SpinnerNumberModel(360, 1, null, 32));
 		
 		tglbtnVariabledepthcolor = new JToggleButton("VariableDepthColor");
 		tglbtnVariabledepthcolor.addActionListener(e -> actualizarFractal());
@@ -162,43 +162,43 @@ public class RealtimeViewPanelScalable extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(118)
-							.addComponent(btnGenerar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnGenerate, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExportar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnVolver, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnExport, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 					.addGap(288)
-					.addComponent(lblProfunidad)
+					.addComponent(lblDepth)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+					.addComponent(spinnerDepth, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
 					.addComponent(tglbtnVariabledepthcolor)
 					.addGap(109)
-					.addComponent(btnRestablecer, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnRestoreDefaults, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(buttonZoomOut)
+					.addComponent(btnZoomOut)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(buttonZoomIn))
-				.addComponent(lblImageCointainer, GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+					.addComponent(btnZoomIn))
+				.addComponent(lblImageContainer, GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnVolver)
-							.addComponent(btnGenerar)
-							.addComponent(btnExportar)
-							.addComponent(buttonZoomIn)
-							.addComponent(buttonZoomOut)
-							.addComponent(btnRestablecer)
+							.addComponent(btnReturn)
+							.addComponent(btnGenerate)
+							.addComponent(btnExport)
+							.addComponent(btnZoomIn)
+							.addComponent(btnZoomOut)
+							.addComponent(btnRestoreDefaults)
 							.addComponent(tglbtnVariabledepthcolor))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(4)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblProfunidad)
-								.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(lblDepth)
+								.addComponent(spinnerDepth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblImageCointainer, GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE))
+					.addComponent(lblImageContainer, GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
@@ -207,7 +207,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 		@Override
 		public void componentResized(ComponentEvent e) {
-			if (btnGenerar != null && btnGenerar.isEnabled())
+			if (btnGenerate != null && btnGenerate.isEnabled())
 				actualizarFractal();
 		}
 	});
@@ -217,19 +217,19 @@ public class RealtimeViewPanelScalable extends JPanel {
 		posx = 0;
 		posy = 0;
 		zoom = 0.5;
-		spinner.setValue(360);
+		spinnerDepth.setValue(360);
 		actualizarFractal();
 	}
 
 	private void zoomIn() {
-		if (btnGenerar.isEnabled()) {
+		if (btnGenerate.isEnabled()) {
 			zoom *= 2;
 			actualizarFractal();
 		}
 	}
 	
 	private void zoomOut() {
-		if (btnGenerar.isEnabled() && zoom > 0.005) {
+		if (btnGenerate.isEnabled() && zoom > 0.005) {
 			zoom /= 2;
 			actualizarFractal();
 		}
@@ -246,23 +246,23 @@ public class RealtimeViewPanelScalable extends JPanel {
 		System.out.println("X: " + posx);
 		System.out.println("Y: " + posy);
 		
-		if (btnGenerar.isEnabled()) {
-			btnGenerar.setEnabled(false);
-			lblImageCointainer.setSize(this.getWidth(), this.getHeight()-20);
+		if (btnGenerate.isEnabled()) {
+			btnGenerate.setEnabled(false);
+			lblImageContainer.setSize(this.getWidth(), this.getHeight()-20);
 			
 			Thread generatorThread = new Thread() {
 				@Override
 				public void run() {
-					image = new BufferedImage(lblImageCointainer.getWidth(), lblImageCointainer.getHeight(), BufferedImage.TYPE_INT_RGB);
+					image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_INT_RGB);
 					MandelbrotsetGeneratorScalable generator;
 					if (tglbtnVariabledepthcolor.isSelected())
-						generator = new MandelbrotsetGeneratorScalable(image, (int)spinner.getValue());
+						generator = new MandelbrotsetGeneratorScalable(image, (int)spinnerDepth.getValue());
 					else
-						generator = new MandelbrotsetGeneratorScalable(image, (int)spinner.getValue(), 360);
+						generator = new MandelbrotsetGeneratorScalable(image, (int)spinnerDepth.getValue(), 360);
 					
 					generator.generate(posx, posy, zoom, scale);
-					btnGenerar.setEnabled(true);
-					btnExportar.setEnabled(true);
+					btnGenerate.setEnabled(true);
+					btnExport.setEnabled(true);
 				}
 			};
 			generatorThread.start();
@@ -276,7 +276,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 						} catch (InterruptedException e) {
 							interrupt();
 						}
-						lblImageCointainer.setIcon(new ImageIcon(image));
+						lblImageContainer.setIcon(new ImageIcon(image));
 					}
 				}
 			};
