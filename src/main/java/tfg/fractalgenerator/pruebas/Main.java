@@ -13,8 +13,7 @@ public class Main {
 		BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
 		
 		System.out.println("Generando fractal...");
-		MandelbrotsetGenerator generator = new MandelbrotsetGenerator(img, 360);
-		generator.generate();
+		MandelbrotsetGenerator.generate(img, 360);
 		
 		try {
 			System.out.println("Exportando imagen...");

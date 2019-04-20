@@ -61,17 +61,17 @@ public class RealtimeViewPanel extends JPanel {
 	 * A {@link JLabel} is used as a container {@link Component} to display
 	 * the image on the {@link JPanel} view.
 	 */
-	private JLabel lblImageCointainer;
+	private JLabel lblImageContainer;
 	
 	/**
 	 * Button for starting the generation process.
 	 */
-	private JButton btnGenerar;
+	private JButton btnGenerate;
 	/**
 	 * Button for exporting the image in it's current state to a file which
 	 * will display a file selector window to select the path and filename.
 	 */
-	private JButton btnExportar;
+	private JButton btnExport;
 	
 	/**
 	 * Initialization of the Panel and it's layout.
@@ -81,18 +81,18 @@ public class RealtimeViewPanel extends JPanel {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
 		
-		lblImageCointainer = new JLabel("");
+		lblImageContainer = new JLabel("");
 		
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
-		btnGenerar = new JButton("Generar");
-		btnGenerar.addActionListener(e -> {
-			btnGenerar.setEnabled(false);
+		JButton btnReturn = new JButton("Volver");
+		btnReturn.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
+		btnGenerate = new JButton("Generar");
+		btnGenerate.addActionListener(e -> {
+			btnGenerate.setEnabled(false);
 			actualizarFractal();
 		});
-		btnExportar = new JButton("Exportar");
-		btnExportar.setEnabled(false);
-		btnExportar.addActionListener(e -> FileSaver.saveFile(image, ImageFormat.PNG));
+		btnExport = new JButton("Exportar");
+		btnExport.setEnabled(false);
+		btnExport.addActionListener(e -> FileSaver.saveFile(image, ImageFormat.PNG));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -101,22 +101,22 @@ public class RealtimeViewPanel extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(118)
-							.addComponent(btnGenerar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnGenerate, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExportar, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnVolver, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnExport, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(956, Short.MAX_VALUE))
-				.addComponent(lblImageCointainer, GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
+				.addComponent(lblImageContainer, GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnVolver)
-						.addComponent(btnGenerar)
-						.addComponent(btnExportar))
+						.addComponent(btnReturn)
+						.addComponent(btnGenerate)
+						.addComponent(btnExport))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblImageCointainer, GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
+					.addComponent(lblImageContainer, GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
@@ -130,16 +130,15 @@ public class RealtimeViewPanel extends JPanel {
 	 * the intended {@code Threads} are created.
 	 */
 	private void actualizarFractal() {
-		lblImageCointainer.setSize(this.getWidth(), this.getHeight()-20);
+		lblImageContainer.setSize(this.getWidth(), this.getHeight()-20);
 		
 		Thread generatorThread = new Thread() {
 			@Override
 			public void run() {
-				image = new BufferedImage(lblImageCointainer.getWidth(), lblImageCointainer.getHeight(), BufferedImage.TYPE_INT_RGB);
-				MandelbrotsetGenerator generator = new MandelbrotsetGenerator(image, 360);
-				generator.generate();
-				btnGenerar.setEnabled(true);
-				btnExportar.setEnabled(true);
+				image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_INT_RGB);
+				MandelbrotsetGenerator.generate(image, 360);
+				btnGenerate.setEnabled(true);
+				btnExport.setEnabled(true);
 			}
 		};
 		generatorThread.start();
@@ -154,7 +153,7 @@ public class RealtimeViewPanel extends JPanel {
 						interrupt();
 					}
 					
-					lblImageCointainer.setIcon(new ImageIcon(image));
+					lblImageContainer.setIcon(new ImageIcon(image));
 				}
 			}
 		};
