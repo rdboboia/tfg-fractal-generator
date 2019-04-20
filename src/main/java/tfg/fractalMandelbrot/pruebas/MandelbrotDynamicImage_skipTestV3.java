@@ -13,8 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-public class MandelbrotDynamicImage_skipTest extends JFrame {
+public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 	private static final long serialVersionUID = 1L;
+	
+	private long s, f;
 
 	private JPanel contentPane;
 
@@ -25,7 +27,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MandelbrotDynamicImage_skipTest frame = new MandelbrotDynamicImage_skipTest();
+					MandelbrotDynamicImage_skipTestV3 frame = new MandelbrotDynamicImage_skipTestV3();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,11 +35,11 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public MandelbrotDynamicImage_skipTest() {
+	public MandelbrotDynamicImage_skipTestV3() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1800, 1060);
 		contentPane = new JPanel();
@@ -48,102 +50,30 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setBounds(0, 0, this.getWidth(), this.getHeight());
 		contentPane.add(lblNewLabel);
-
-		new Thread() {
+		
+		int width = lblNewLabel.getWidth();
+		int height = lblNewLabel.getHeight();
+		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
+		int max = 256*256;
+		int step = 64;
+		int tolerancia = 8;
+		double halfWidth = width / 2.0;
+		double halfHeight = height / 2.0;
+		double scale = 4.0 / width;
+		
+		s = System.currentTimeMillis();
+		
+		Thread t1 = new Thread() {
 			public void run() {
-				long s, f;
-				s = System.currentTimeMillis();
-				int width = lblNewLabel.getWidth();
-				int height = lblNewLabel.getHeight();
-				int max = 256*256;
-
-				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-
 				double x0, y0, x, y, xtemp;
 				int iteration = 0;
-				int tolerancia = 8;
 				int iteracionesEnTolerancia = 0;
-
-				double halfWidth = width / 2.0;
-				double halfHeight = height / 2.0;
-				double scale = 4.0 / width;
-				
-				
-				
-//				for (int i = 0; i < height; i++) {
-//					iteration = 0;
-//					iteracionesEnTolerancia = 0;
-//					for (int j = 0; j+i < height && j < width && iteracionesEnTolerancia < tolerancia; j++) {
-//						if (img.getRGB(j, j+i) <= 0) {
-//							x0 = (j - halfWidth) * scale;
-//							y0 = (i+j - halfHeight) * scale;
-//							x = 0;
-//							y = 0;
-//							iteration = 0;
-//	
-//							while (x * x + y * y <= 4 && iteration < max) {
-//								xtemp = x * x - y * y + x0;
-//								y = 2 * x * y + y0;
-//								x = xtemp;
-//								iteration++;
-//							}
-//	//						img.setRGB(j, i, iteration);
-//							
-//							if (iteration < max)
-//								img.setRGB(j, i+j, Color.HSBtoRGB(iteration/256f, 1, iteration/(iteration+8f)));
-//							else
-//								img.setRGB(j, i+j, 0);
-//							
-//							if (!(iteration < max))
-//								iteracionesEnTolerancia++;
-//							else // tolerancia de MAX seguidos
-//								iteracionesEnTolerancia = 0;
-//							
-//							lblNewLabel.setIcon(new ImageIcon(img));
-//						}
-//					}
-//				}
-//				
-//				for (int j = 0; j < width; j++) {
-//					iteration = 0;
-//					iteracionesEnTolerancia = 0;
-//					for (int i = 0; j+i < width && i < height && iteracionesEnTolerancia < tolerancia; i++) {
-//						if (img.getRGB(j+i, i) <= 0) {
-//							x0 = (j+i - halfWidth) * scale;
-//							y0 = (i - halfHeight) * scale;
-//							x = 0;
-//							y = 0;
-//							iteration = 0;
-//	
-//							while (x * x + y * y <= 4 && iteration < max) {
-//								xtemp = x * x - y * y + x0;
-//								y = 2 * x * y + y0;
-//								x = xtemp;
-//								iteration++;
-//							}
-//	//						img.setRGB(j, i, iteration);
-//							
-//							if (iteration < max)
-//								img.setRGB(j+i, i, Color.HSBtoRGB(iteration/256f, 1, iteration/(iteration+8f)));
-//							else
-//								img.setRGB(j+i, i, 0);
-//							
-//							if (!(iteration < max))
-//								iteracionesEnTolerancia++;
-//							else // tolerancia de MAX seguidos
-//								iteracionesEnTolerancia = 0;
-//							
-//							lblNewLabel.setIcon(new ImageIcon(img));
-//						}
-//					}
-//				}
-				
-				
 				
 				for (int i = 0; i < height; i++) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int j = 0; j < width && iteracionesEnTolerancia < tolerancia; j++) {
+					for (int j = 0; j < width /* && iteracionesEnTolerancia < tolerancia */; j++) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -168,16 +98,28 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 								iteracionesEnTolerancia++;
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
+							
+							if (iteracionesEnTolerancia >= tolerancia)
+								j += step;
 						
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
 					}
 				}
+			}
+		};
+		t1.start();
+			
+		Thread t2 = new Thread() {
+			public void run() {
+				double x0, y0, x, y, xtemp;
+				int iteration = 0;
+				int iteracionesEnTolerancia = 0;
 				
 				for (int j = 0; j < width; j++) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int i = 0; i < height && iteracionesEnTolerancia < tolerancia; i++) {
+					for (int i = 0; i < height /* && iteracionesEnTolerancia < tolerancia */; i++) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -203,15 +145,27 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
 							
+							if (iteracionesEnTolerancia >= tolerancia)
+								i += step;
+							
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
 					}
 				}
-				
+			}
+		};
+		t2.start();
+		
+		Thread t3 = new Thread() {
+			public void run() {
+				double x0, y0, x, y, xtemp;
+				int iteration = 0;
+				int iteracionesEnTolerancia = 0;
+			
 				for (int i = height-1; i > 0; i--) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int j = width-1; j > 0 && iteracionesEnTolerancia < tolerancia; j--) {
+					for (int j = width-1; j > 0 /* && iteracionesEnTolerancia < tolerancia */; j--) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -237,15 +191,27 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
 							
+							if (iteracionesEnTolerancia >= tolerancia)
+								j -= step;
+							
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
 					}
 				}
+			}
+		};
+		t3.start();
+		
+		Thread t4 = new Thread("t4") {
+			public void run() {
+				double x0, y0, x, y, xtemp;
+				int iteration = 0;
+				int iteracionesEnTolerancia = 0;
 				
 				for (int j = width-1; j > 0; j--) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int i = height-1; i > 0 && iteracionesEnTolerancia < tolerancia; i--) {
+					for (int i = height-1; i > 0 /* && iteracionesEnTolerancia < tolerancia */; i--) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -271,23 +237,41 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
 							
+							if (iteracionesEnTolerancia >= tolerancia)
+								i -= step;
+							
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
 					}
 				}
-				
-				f = System.currentTimeMillis();
-				System.out.println("FIN ================================================");
-				System.out.println((f - s) + " ms.");
-				
-				// Exportar imagen a png
+			}
+		};
+		t4.start();
+		
+		new Thread() {
+			public void run() {
 				try {
-					ImageIO.write(img, "png", new File("Z:\\mandelbrot_v2.png"));
-				} catch (IOException e) {
-					e.printStackTrace();
+					t1.join();
+					t2.join();
+					t3.join();
+					t4.join();
+					
+					f = System.currentTimeMillis();
+					System.out.println("FIN ================================================");
+					System.out.println((f - s) + " ms.");
+
+					// Exportar imagen a png
+					try {
+						ImageIO.write(img, "png", new File("Z:\\mandelbrot_v3.png"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
 				}
-				
 			}
 		}.start();
+
 	}
+
 }

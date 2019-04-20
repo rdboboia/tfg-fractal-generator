@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-public class MandelbrotDynamicImage_skipTest extends JFrame {
+public class MandelbrotDynamicImage_skipTestV2 extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
@@ -25,7 +25,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MandelbrotDynamicImage_skipTest frame = new MandelbrotDynamicImage_skipTest();
+					MandelbrotDynamicImage_skipTestV2 frame = new MandelbrotDynamicImage_skipTestV2();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,11 +33,11 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public MandelbrotDynamicImage_skipTest() {
+	public MandelbrotDynamicImage_skipTestV2() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1800, 1060);
 		contentPane = new JPanel();
@@ -63,6 +63,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 				int iteration = 0;
 				int tolerancia = 8;
 				int iteracionesEnTolerancia = 0;
+				int step = 64;
 
 				double halfWidth = width / 2.0;
 				double halfHeight = height / 2.0;
@@ -143,7 +144,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 				for (int i = 0; i < height; i++) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int j = 0; j < width && iteracionesEnTolerancia < tolerancia; j++) {
+					for (int j = 0; j < width /* && iteracionesEnTolerancia < tolerancia */; j++) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -168,6 +169,9 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 								iteracionesEnTolerancia++;
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
+							
+							if (iteracionesEnTolerancia >= tolerancia)
+								j += step;
 						
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
@@ -177,7 +181,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 				for (int j = 0; j < width; j++) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int i = 0; i < height && iteracionesEnTolerancia < tolerancia; i++) {
+					for (int i = 0; i < height /* && iteracionesEnTolerancia < tolerancia */; i++) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -202,6 +206,9 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 								iteracionesEnTolerancia++;
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
+							
+							if (iteracionesEnTolerancia >= tolerancia)
+								i += step;
 							
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
@@ -211,7 +218,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 				for (int i = height-1; i > 0; i--) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int j = width-1; j > 0 && iteracionesEnTolerancia < tolerancia; j--) {
+					for (int j = width-1; j > 0 /* && iteracionesEnTolerancia < tolerancia */; j--) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -236,6 +243,9 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 								iteracionesEnTolerancia++;
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
+							
+							if (iteracionesEnTolerancia >= tolerancia)
+								j -= step;
 							
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
@@ -245,7 +255,7 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 				for (int j = width-1; j > 0; j--) {
 					iteration = 0;
 					iteracionesEnTolerancia = 0;
-					for (int i = height-1; i > 0 && iteracionesEnTolerancia < tolerancia; i--) {
+					for (int i = height-1; i > 0 /* && iteracionesEnTolerancia < tolerancia */; i--) {
 						if (img.getRGB(j, i) <= 0) {
 							x0 = (j - halfWidth) * scale;
 							y0 = (i - halfHeight) * scale;
@@ -270,6 +280,9 @@ public class MandelbrotDynamicImage_skipTest extends JFrame {
 								iteracionesEnTolerancia++;
 							else // tolerancia de MAX seguidos
 								iteracionesEnTolerancia = 0;
+							
+							if (iteracionesEnTolerancia >= tolerancia)
+								i -= step;
 							
 							lblNewLabel.setIcon(new ImageIcon(img));
 						}
