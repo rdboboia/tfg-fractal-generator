@@ -10,6 +10,7 @@ import javax.swing.GroupLayout.Alignment;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
 
 import javax.swing.JButton;
+import java.awt.Font;
 
 /**
  * This view is meant to be a simple selector for different modes of operation
@@ -40,30 +41,32 @@ public class ModeSelectionPanel extends JPanel {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
 		
-		JButton btnNewButton = new JButton("Visualización en tiempo real");
-		btnNewButton.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(RealtimeViewPanel.NAME));
+		JButton btnVisualizacionTiempoReal = new JButton("Visualización en tiempo real");
+		btnVisualizacionTiempoReal.setFont(new Font("Tahoma", Font.BOLD, 24));
+		btnVisualizacionTiempoReal.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(RealtimeViewPanel.NAME));
 		
-		JButton btnSoloExportarA = new JButton("Solo exportar a imágen");
+		JButton btnSoloExportarA = new JButton("Solo exportar a imagen");
+		btnSoloExportarA.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnSoloExportarA.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(FileOnlyPanel.NAME));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(299)
-					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-					.addGap(82)
-					.addComponent(btnSoloExportarA, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-					.addGap(299))
+					.addContainerGap()
+					.addComponent(btnVisualizacionTiempoReal, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(btnSoloExportarA, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(260)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnSoloExportarA, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-					.addGap(260))
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnSoloExportarA, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE)
+						.addComponent(btnVisualizacionTiempoReal, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		setLayout(groupLayout);
 
