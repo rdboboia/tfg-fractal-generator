@@ -5,10 +5,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import tfg.fractalgenerator.gui.panels.FileOnlyPanel;
-import tfg.fractalgenerator.gui.panels.LanguageSelectionPanel;
+import tfg.fractalgenerator.gui.panels.ExportToFilePanel;
 import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
-import tfg.fractalgenerator.gui.panels.RealtimeViewPanel;
+import tfg.fractalgenerator.gui.panels.RealtimeViewPanelScalable;
+import tfg.fractalgenerator.gui.panels.pruebas.LanguageSelectionPanel;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -35,7 +35,7 @@ import java.util.List;
 public class MandelbrotSetGUI extends JFrame {
 	/**
 	 * Maintains the reference to the one and only instance of the
-	 * {@code Class} {@link MandelbrotSetGUI}.
+	 * {@link MandelbrotSetGUI} {@code Class}.
 	 */
 	private static MandelbrotSetGUI instance;
 	
@@ -43,25 +43,30 @@ public class MandelbrotSetGUI extends JFrame {
 	 * Serial version number. Using the default one.
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Main content panel for the {@link MandelbrotSetGUI} {@code Frame}.
 	 */
 	private JPanel contentPanel;
+	
 	/**
-	 * A list with all the panels that are inside the main panel.
+	 * A list with all the panel names that are inside the main panel.
 	 */
 	private List<String> panels;
 	
 	/**
 	 * Initial size for the main panel that is also used in all sub-panels.
 	 * <br>
-	 * Also useful for development since WindowBuilder has its limitations.
+	 * Also useful for development since WindowBuilder has its limitations and
+	 * doesn't properly parse values that are unknown in compilation time.
 	 */
 	public static final Dimension size = new Dimension(1280, 720);
 	
 	/**
 	 * Main method to get the one and only possible instance of
 	 * {@link MandelbrotSetGUI} {@code Class}, using the Singleton pattern.
+	 * This is, it always returns the one and only instance of
+	 * {@link MandelbrotSetGUI} creating it if it doesn't exist yet.
 	 * 
 	 * @return the {@link MandelbrotSetGUI} instance.
 	 */
@@ -84,8 +89,10 @@ public class MandelbrotSetGUI extends JFrame {
 	 * the panel names list with the given name parameter.
 	 */
 	public boolean changeCard(String panelName) {
-		if (!panels.contains(panelName))
+		if (!panels.contains(panelName)) { // Informing both the user and the developer.
+			JOptionPane.showMessageDialog(this, "La vista seleccionada no se ha podido encontrar.", "Vista no encontrada", JOptionPane.ERROR_MESSAGE);
 			throw new InvalidParameterException("The panel name provided was not found in the panel names list.");
+		}
 		
 		((CardLayout) contentPanel.getLayout()).show(contentPanel, panelName);
 		return true;
@@ -95,7 +102,8 @@ public class MandelbrotSetGUI extends JFrame {
 	 * Initialization of the main Window. It sets its size, changes the
 	 * {@code LookAndFeel} for all the views and set some more size and placement
 	 * variables. It instantiates all the sub-views (cards) and creates the
-	 * list containing all their names.
+	 * list containing all their names. If the system look and feel could not be
+	 * loaded a error message is shown to the user.
 	 */
 	private MandelbrotSetGUI() {
 		this.setSize(size);
@@ -105,7 +113,7 @@ public class MandelbrotSetGUI extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 720);
+		setBounds(0, 0, (int)size.getWidth() + 25, (int)size.getHeight());
 		contentPanel = new JPanel();
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPanel);
@@ -114,10 +122,10 @@ public class MandelbrotSetGUI extends JFrame {
 		JPanel modeSelectionPanel = new ModeSelectionPanel();
 		contentPanel.add(modeSelectionPanel, modeSelectionPanel.getName());
 		
-		JPanel realtimeViewPanel = new RealtimeViewPanel();
+		JPanel realtimeViewPanel = new RealtimeViewPanelScalable();
 		contentPanel.add(realtimeViewPanel, realtimeViewPanel.getName());
 		
-		JPanel fileOnlyPanel = new FileOnlyPanel();
+		JPanel fileOnlyPanel = new ExportToFilePanel();
 		contentPanel.add(fileOnlyPanel, fileOnlyPanel.getName());
 		
 		JPanel languageSelectionPanel = new LanguageSelectionPanel();
