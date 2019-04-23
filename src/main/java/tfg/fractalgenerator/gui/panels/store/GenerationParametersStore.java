@@ -48,6 +48,8 @@ public class GenerationParametersStore {
 	 * Private constructor. Using Singleton pattern.
 	 */
 	private GenerationParametersStore() {
+		width = 3840;
+		height = 2160;
 		depth = 360;
 		colorDepth = 360;
 		position = new MandelbrotsetPosition();
