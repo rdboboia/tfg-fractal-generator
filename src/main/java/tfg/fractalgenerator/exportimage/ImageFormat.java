@@ -1,7 +1,9 @@
 package tfg.fractalgenerator.exportimage;
 
 /**
- * A enum that contains all the {@link ImageIO} supported formats on Java 8.
+ * A enum that contains all the {@link ImageIO} supported formats on Java 8
+ * (except for WBMP which doesn't seem to work properly for our intended use
+ * case).
  * 
  * @author -$BOSS$-
  */
