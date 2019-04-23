@@ -83,7 +83,7 @@ class MandelbrotsetGeneratorTest {
 		}
 	}
 	
-	
+	@Disabled
 	@Test
 	void generatorV4Test() {
 		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -102,6 +102,7 @@ class MandelbrotsetGeneratorTest {
 		}
 	}
 	
+	@Disabled
 	@Test
 	void generatorV5Test() {
 		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);

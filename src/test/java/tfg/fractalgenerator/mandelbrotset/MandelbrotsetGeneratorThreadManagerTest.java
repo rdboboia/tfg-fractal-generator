@@ -27,8 +27,8 @@ class MandelbrotsetGeneratorThreadManagerTest {
 			MandelbrotsetGeneratorThreadManager.generate(renderedImage, 360, 360, new MandelbrotsetPosition(0, 0, 3, 4d / 1280));
 			byte[] renderedImagePixels = ((DataBufferByte) renderedImage.getRaster().getDataBuffer()).getData();
 			
-			ImageExport.export(imageTest, ImageFormat.PNG, "Z:\\", "fractalOriginal", true);
-			ImageExport.export(renderedImage, ImageFormat.PNG, "Z:\\", "fractalNuevo", true);
+//			ImageExport.export(imageTest, ImageFormat.PNG, "Z:\\", "fractalOriginal", true);
+//			ImageExport.export(renderedImage, ImageFormat.PNG, "Z:\\", "fractalNuevo", true);
 			
 			assertArrayEquals(imageTestPixels, renderedImagePixels);
 		} catch (IOException e) {
