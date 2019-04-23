@@ -3,6 +3,7 @@ package tfg.fractalgenerator.exportimage;
 /**
  * A class that provides a method to parse from a {@link ImageFormat} enum
  * to its {@link String} representation.
+ * 
  * @author -$BOSS$-
  */
 public class ImageFormatParser {

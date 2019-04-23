@@ -1,6 +1,5 @@
 package tfg.fractalgenerator.gui;
 
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,9 +20,8 @@ public class LookAndFeelChanger {
 	 * Sets the environment design or look and feel to the one corresponding
 	 * to the parameter.
 	 * @param className the desired look and feel class name.
-	 * @return {@code true} if a look and feel was found bases on the name
-	 * provided and it was changed. Otherwise, {@code false} is returned and
-	 * a {@link JOptionPane} with an error message is shown.
+	 * @return {@code true} if a look and feel was found based on the name
+	 * provided and it was changed. Otherwise, {@code false} is returned.
 	 */
 	static boolean changeLookAndFeel(String className) {
 		try {
@@ -36,8 +34,8 @@ public class LookAndFeelChanger {
 	
 	/**
 	 * Sets the current design theme to the host system design theme.
-	 * @return false if the system look and feel could not be found or applied;
-	 * true otherwise.
+	 * @return {@code false} if the system look and feel could not be found or
+	 * applied; {@code true} otherwise.
 	 */
 	public static boolean useSystemLookAndFeel() {
 		return changeLookAndFeel(UIManager.getSystemLookAndFeelClassName());

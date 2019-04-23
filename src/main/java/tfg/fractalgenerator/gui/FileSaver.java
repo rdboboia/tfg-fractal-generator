@@ -26,7 +26,8 @@ public class FileSaver {
 	}
 	
 	/**
-	 * Displays a confirmation message when the file is successfully saved.
+	 * Displays a confirmation message when the file is successfully saved or
+	 * an error message if the output file doesn't seem to exist.
 	 */
 	private static void checkFile(String fileDirectory, String fileName, String fileExtension) {
 		fileName = removeFileExtensionIfAlreadyExists(fileName, fileExtension);
