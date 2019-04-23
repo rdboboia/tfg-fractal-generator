@@ -1,4 +1,4 @@
-package tfg.fractalgenerator.mandelbrotset;
+package tfg.fractalgenerator.mandelbrotset.pruebas;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

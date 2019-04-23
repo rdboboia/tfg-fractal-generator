@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import tfg.fractalgenerator.exportimage.ImageExport;
 import tfg.fractalgenerator.exportimage.ImageFormat;
-import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGenerator;
+import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorPruebasOptimizacion;
 
 public class Main {
 	public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class Main {
 		BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
 		
 		System.out.println("Generando fractal...");
-		MandelbrotsetGenerator.generate(img, 360);
+		MandelbrotsetGeneratorPruebasOptimizacion.generate(img, 360);
 		
 		try {
 			System.out.println("Exportando imagen...");

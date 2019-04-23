@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
+public class MandelbrotDynamicImage_skipTestV4 extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private long s, f;
@@ -27,7 +27,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MandelbrotDynamicImage_skipTestV3 frame = new MandelbrotDynamicImage_skipTestV3();
+					MandelbrotDynamicImage_skipTestV4 frame = new MandelbrotDynamicImage_skipTestV4();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MandelbrotDynamicImage_skipTestV3() {
+	public MandelbrotDynamicImage_skipTestV4() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1800, 1060);
 		contentPane = new JPanel();
@@ -55,9 +55,9 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 		int height = lblNewLabel.getHeight();
 		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		
-		int max = 256*256*4;
+		int max = 3600;
 		int step = 64;
-		int tolerancia = 8;
+		int tolerancia = 250;
 		double halfWidth = width / 2.0;
 		double halfHeight = height / 2.0;
 		double scale = 4.0 / width;
@@ -66,7 +66,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 		
 		Thread t1 = new Thread() {
 			public void run() {
-				double x0, y0, x, y, xtemp;
+				double x0, y0, x, y, xtemp, ytemp;
 				int iteration = 0;
 				int iteracionesEnTolerancia = 0;
 				
@@ -83,8 +83,13 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 	
 							while (x * x + y * y <= 4 && iteration < max) {
 								xtemp = x * x - y * y + x0;
-								y = 2 * x * y + y0;
+								ytemp = 2 * x * y + y0;
+								
+								if (x == xtemp && y == ytemp)
+									iteration = max;
+								
 								x = xtemp;
+								y = ytemp;
 								iteration++;
 							}
 	//						img.setRGB(j, i, iteration);
@@ -112,7 +117,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 			
 		Thread t2 = new Thread() {
 			public void run() {
-				double x0, y0, x, y, xtemp;
+				double x0, y0, x, y, xtemp, ytemp;
 				int iteration = 0;
 				int iteracionesEnTolerancia = 0;
 				
@@ -129,8 +134,13 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 	
 							while (x * x + y * y <= 4 && iteration < max) {
 								xtemp = x * x - y * y + x0;
-								y = 2 * x * y + y0;
+								ytemp = 2 * x * y + y0;
+								
+								if (x == xtemp && y == ytemp)
+									iteration = max;
+								
 								x = xtemp;
+								y = ytemp;
 								iteration++;
 							}
 //							img.setRGB(j, i, iteration);
@@ -158,7 +168,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 		
 		Thread t3 = new Thread() {
 			public void run() {
-				double x0, y0, x, y, xtemp;
+				double x0, y0, x, y, xtemp, ytemp;
 				int iteration = 0;
 				int iteracionesEnTolerancia = 0;
 			
@@ -175,8 +185,13 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 	
 							while (x * x + y * y <= 4 && iteration < max) {
 								xtemp = x * x - y * y + x0;
-								y = 2 * x * y + y0;
+								ytemp = 2 * x * y + y0;
+								
+								if (x == xtemp && y == ytemp)
+									iteration = max;
+								
 								x = xtemp;
+								y = ytemp;
 								iteration++;
 							}
 //							img.setRGB(j, i, iteration);
@@ -204,7 +219,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 		
 		Thread t4 = new Thread("t4") {
 			public void run() {
-				double x0, y0, x, y, xtemp;
+				double x0, y0, x, y, xtemp, ytemp;
 				int iteration = 0;
 				int iteracionesEnTolerancia = 0;
 				
@@ -221,8 +236,13 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 	
 							while (x * x + y * y <= 4 && iteration < max) {
 								xtemp = x * x - y * y + x0;
-								y = 2 * x * y + y0;
+								ytemp = 2 * x * y + y0;
+								
+								if (x == xtemp && y == ytemp)
+									iteration = max;
+								
 								x = xtemp;
+								y = ytemp;
 								iteration++;
 							}
 //							img.setRGB(j, i, iteration);

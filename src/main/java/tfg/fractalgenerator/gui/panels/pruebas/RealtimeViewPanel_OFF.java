@@ -1,11 +1,12 @@
-package tfg.fractalgenerator.gui.panels;
+package tfg.fractalgenerator.gui.panels.pruebas;
 
 import javax.swing.JPanel;
 
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.gui.FileSaver;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
-import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGenerator;
+import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
+import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorThread_Optimizations;
 
 import java.awt.image.BufferedImage;
 
@@ -36,7 +37,7 @@ import java.awt.event.ActionListener;
  * 
  * @author -$BOSS$-
  */
-public class RealtimeViewPanel extends JPanel {
+public class RealtimeViewPanel_OFF extends JPanel {
 	/**
 	 * Serial version number. Using the default one.
 	 */
@@ -55,7 +56,7 @@ public class RealtimeViewPanel extends JPanel {
 	 * for the card layout since it makes a lot easier to have access to a
 	 * component's name. 
 	 */
-	public static final String NAME = RealtimeViewPanel.class.getSimpleName();
+	public static final String NAME = RealtimeViewPanel_OFF.class.getSimpleName();
 	
 	/**
 	 * A {@link JLabel} is used as a container {@link Component} to display
@@ -77,7 +78,7 @@ public class RealtimeViewPanel extends JPanel {
 	 * Initialization of the Panel and it's layout.
 	 * It also contains the {@link ActionListener} for each button.
 	 */
-	public RealtimeViewPanel() {
+	public RealtimeViewPanel_OFF() {
 		this.setSize(MandelbrotSetGUI.size);
 		this.setName(NAME);
 		
@@ -136,7 +137,22 @@ public class RealtimeViewPanel extends JPanel {
 			@Override
 			public void run() {
 				image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_INT_RGB);
-				MandelbrotsetGenerator.generate(image, 360);
+//				MandelbrotsetGenerator.generate(image, 360);
+				
+				MandelbrotsetGeneratorThread_Optimizations[] t = new MandelbrotsetGeneratorThread_Optimizations[10];
+				for (int i = 0 ; i < t.length ; i++) {
+					t[i] = new MandelbrotsetGeneratorThread_Optimizations(image, 360, i, t.length);
+					t[i].start();
+				}
+				for (int i = 0 ; i < t.length ; i++) {
+					try {
+						t[i].join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
 				btnGenerate.setEnabled(true);
 				btnExport.setEnabled(true);
 			}

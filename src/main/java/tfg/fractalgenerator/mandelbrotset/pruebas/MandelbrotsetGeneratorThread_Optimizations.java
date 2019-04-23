@@ -1,4 +1,4 @@
-package tfg.fractalgenerator.mandelbrotset;
+package tfg.fractalgenerator.mandelbrotset.pruebas;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -12,11 +12,25 @@ import java.awt.image.BufferedImage;
  * 
  * @author -$BOSS$-
  */
-public class MandelbrotsetGenerator {
+public class MandelbrotsetGeneratorThread_Optimizations extends Thread {
+	private BufferedImage image;
+	private int depth;
+	private int id;
+	private int num;
+	
 	/**
 	 * Private constructor. No instances allowed.
 	 */
-	private MandelbrotsetGenerator() {
+	public MandelbrotsetGeneratorThread_Optimizations(BufferedImage image, int depth, int id, int num) {
+		this.image = image;
+		this.depth = depth;
+		this.num = num;
+		this.id = id;
+	}
+	
+	@Override
+	public void run() {
+		generateV4par(image, depth, id, num);
 	}
 	
 	/**
@@ -117,6 +131,113 @@ public class MandelbrotsetGenerator {
 				
 				if (iteration < depth)
 					image.setRGB(j, i, Color.HSBtoRGB(iteration/(float)depth, 1, iteration/(iteration+8f)));
+				else
+					image.setRGB(j, i, 0);
+			}
+		}
+	}
+	
+//	public static void generateV4(BufferedImage image, int depth) {
+//		int height = image.getHeight();
+//		int width = image.getWidth();
+//		
+//		for (int i = 0; i < height; i++) {
+//			for (int j = 0; j < width; j++) {
+//				double x0 = (j - width / 2d) * 4d / width;
+//				double y0 = (i - height / 2d) * 4d / width;
+//				double x = 0;
+//				double y = 0;
+//				int iteration = 0;
+//				double xSquared = 0;
+//				double ySquared = 0;
+//				
+//				while (xSquared + ySquared <= 4 && iteration < depth) {
+//					double xtemp = xSquared - ySquared + x0;
+//					y = 2 * x * y + y0;
+//					x = xtemp;
+//					
+//					xSquared = Math.pow(x, 2);
+//					ySquared = Math.pow(y, 2);
+//					
+//					iteration++;
+//				}
+//				
+//				if (iteration < depth)
+//					image.setRGB(j, i, Color.HSBtoRGB(iteration/(float)depth, 1, iteration/(iteration+8f)));
+//				else
+//					image.setRGB(j, i, 0);
+//			}
+//		}
+//	}
+	
+	public static void generateV4(BufferedImage image, int depth) {
+		int height = image.getHeight();
+		int width = image.getWidth();
+		
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				double x0 = (j - width / 2d) * 4d / width;
+				double y0 = (i - height / 2d) * 4d / width;
+				double x = 0;
+				double y = 0;
+				double xSquared = 0;
+				double ySquared = 0;
+				int iteration = 0;
+				
+				while (xSquared + ySquared <= 4 && iteration < depth) {
+					double xtemp = xSquared - ySquared + x0;
+					double ytemp = 2 * x * y + y0;
+					
+					if (x == xtemp && y == ytemp)
+						iteration = depth;
+					
+					x = xtemp;
+					y = ytemp;
+					iteration++;
+					
+					xSquared = x * x;
+					ySquared = y * y;
+				}
+				
+				if (iteration < depth)
+					image.setRGB(j, i, Color.HSBtoRGB(iteration/(float)depth, 1, iteration/(iteration+8f)));
+				else
+					image.setRGB(j, i, 0);
+			}
+		}
+	}
+	
+	public static void generateV4par(BufferedImage image, int depth, int id, int num) {
+		int height = image.getHeight();
+		int width = image.getWidth();
+
+		for (int i = id; i < height; i += num) {
+			for (int j = 0; j < width; j++) {
+				double x0 = (j - width / 2d) * 4d / width;
+				double y0 = (i - height / 2d) * 4d / width;
+				double x = 0;
+				double y = 0;
+				double xSquared = 0;
+				double ySquared = 0;
+				int iteration = 0;
+
+				while (xSquared + ySquared <= 4 && iteration < depth) {
+					double xtemp = xSquared - ySquared + x0;
+					double ytemp = 2 * x * y + y0;
+
+					if (x == xtemp && y == ytemp)
+						iteration = depth;
+
+					x = xtemp;
+					y = ytemp;
+					iteration++;
+
+					xSquared = x * x;
+					ySquared = y * y;
+				}
+
+				if (iteration < depth)
+					image.setRGB(j, i, Color.HSBtoRGB(iteration / (float) depth, 1, iteration / (iteration + 8f)));
 				else
 					image.setRGB(j, i, 0);
 			}

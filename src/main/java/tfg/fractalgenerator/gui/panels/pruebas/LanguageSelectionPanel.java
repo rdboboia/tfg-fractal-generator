@@ -1,4 +1,4 @@
-package tfg.fractalgenerator.gui.panels;
+package tfg.fractalgenerator.gui.panels.pruebas;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
+import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 
 public class LanguageSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
