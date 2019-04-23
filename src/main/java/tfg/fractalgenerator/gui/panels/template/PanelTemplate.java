@@ -1,4 +1,4 @@
-package tfg.fractalgenerator.gui.panels;
+package tfg.fractalgenerator.gui.panels.template;
 
 import java.awt.event.ActionListener;
 
@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
+import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 
 /**
  * Template for each of the views of the card layout group. It contains a
