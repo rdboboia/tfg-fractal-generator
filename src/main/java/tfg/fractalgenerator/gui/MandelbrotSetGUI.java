@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import tfg.fractalgenerator.gui.panels.ExportToFilePanel;
 import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 import tfg.fractalgenerator.gui.panels.RealtimeViewPanelScalable;
-import tfg.fractalgenerator.gui.panels.pruebas.LanguageSelectionPanel;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -127,9 +126,6 @@ public class MandelbrotSetGUI extends JFrame {
 		
 		JPanel fileOnlyPanel = new ExportToFilePanel();
 		contentPanel.add(fileOnlyPanel, fileOnlyPanel.getName());
-		
-		JPanel languageSelectionPanel = new LanguageSelectionPanel();
-		contentPanel.add(languageSelectionPanel, languageSelectionPanel.getName());
 		
 		panels = new ArrayList<>();
 		Component[] components = contentPanel.getComponents();
