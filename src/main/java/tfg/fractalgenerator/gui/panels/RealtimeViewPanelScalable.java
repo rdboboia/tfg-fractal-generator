@@ -165,7 +165,8 @@ public class RealtimeViewPanelScalable extends JPanel {
 		
 		btnGenerate = new JButton("Generar");
 		btnGenerate.addActionListener(e -> {
-			updateImage();
+			if (btnGenerate.isEnabled())
+				updateImage();
 		});
 		
 		btnExport = new JButton("Exportar");
