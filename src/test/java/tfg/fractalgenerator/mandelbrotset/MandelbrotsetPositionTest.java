@@ -32,4 +32,16 @@ class MandelbrotsetPositionTest {
 		position.setZoom(5d);
 		assertEquals(5d, position.getZoom());
 	}
+	
+	@Test
+	void toStringTest() {
+		MandelbrotsetPosition position = new MandelbrotsetPosition();
+		assertEquals("MandelbrotsetPosition [posx=0.0, posy=0.0, zoom=256.0, scale=1.0]", position.toString());
+		
+		position.setPosx(1);
+		position.setPosy(1);
+		position.setScale(5);
+		position.setZoom(5);
+		assertEquals("MandelbrotsetPosition [posx=1.0, posy=1.0, zoom=5.0, scale=5.0]", position.toString());
+	}
 }

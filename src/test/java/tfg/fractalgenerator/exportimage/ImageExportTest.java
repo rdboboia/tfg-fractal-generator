@@ -9,6 +9,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javax.imageio.ImageIO;
+
 import org.junit.jupiter.api.Test;
 
 class ImageExportTest {
@@ -198,5 +200,10 @@ class ImageExportTest {
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
+	}
+	
+	@Test
+	void supportedImageFormatsTest() {
+		assertArrayEquals(ImageIO.getWriterFormatNames(), ImageExport.getSupportedImageFormats());
 	}
 }

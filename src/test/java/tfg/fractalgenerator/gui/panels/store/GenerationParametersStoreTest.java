@@ -26,6 +26,7 @@ class GenerationParametersStoreTest {
 	@Test
 	void gettersAndSettersTest() {
 		GenerationParametersStore store = GenerationParametersStore.getInstance();
+		MandelbrotsetPosition position = new MandelbrotsetPosition();
 		
 		store.setColorDepth(1);
 		assertEquals(1, store.getColorDepth());
@@ -50,5 +51,11 @@ class GenerationParametersStoreTest {
 		
 		store.getPosition().setZoom(5d);
 		assertEquals(5d, store.getPosition().getZoom());
+		
+		store.setPosition(new MandelbrotsetPosition());
+		assertEquals(position.getPosx(), store.getPosition().getPosx());
+		assertEquals(position.getPosy(), store.getPosition().getPosy());
+		assertEquals(position.getScale(), store.getPosition().getScale());
+		assertEquals(position.getZoom(), store.getPosition().getZoom());
 	}
 }
