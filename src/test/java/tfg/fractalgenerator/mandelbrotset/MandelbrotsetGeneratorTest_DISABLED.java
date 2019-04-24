@@ -12,7 +12,7 @@ import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorPruebasOptimizacion;
 import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorThread_Optimizations;
 
-class MandelbrotsetGeneratorTest {
+class MandelbrotsetGeneratorTest_DISABLED {
 	private static final int WIDTH = 1920 * 4;
 	private static final int HEIGHT = 1080 * 4;
 	private static final int DEPTH = 360 * 1;
