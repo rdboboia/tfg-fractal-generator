@@ -136,7 +136,7 @@ public class RealtimeViewPanel_OFF extends JPanel {
 		Thread generatorThread = new Thread() {
 			@Override
 			public void run() {
-				image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_INT_RGB);
+				image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
 //				MandelbrotsetGenerator.generate(image, 360);
 				
 				MandelbrotsetGeneratorThread_Optimizations[] t = new MandelbrotsetGeneratorThread_Optimizations[10];

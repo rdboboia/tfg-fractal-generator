@@ -29,7 +29,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorTest() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -48,7 +48,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV2Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -67,7 +67,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV3Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -86,7 +86,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV4Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -105,7 +105,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV5Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -124,7 +124,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV4parTest() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
 		long s, f;
 
 		s = System.currentTimeMillis();

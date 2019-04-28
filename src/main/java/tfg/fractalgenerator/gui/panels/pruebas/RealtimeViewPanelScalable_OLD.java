@@ -255,7 +255,7 @@ public class RealtimeViewPanelScalable_OLD extends JPanel {
 			Thread generatorThread = new Thread() {
 				@Override
 				public void run() {
-					image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_INT_RGB);
+					image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
 					MandelbrotsetGeneratorScalable generator;
 					if (tglbtnVariabledepthcolor.isSelected())
 						generator = new MandelbrotsetGeneratorScalable(image, (int)spinnerDepth.getValue());

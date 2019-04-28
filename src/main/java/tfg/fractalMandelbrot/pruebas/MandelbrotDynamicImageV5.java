@@ -59,7 +59,7 @@ public class MandelbrotDynamicImageV5 extends JFrame {
 //				int max_color = 256;
 				int white = 256*256*256 - 1;
 
-				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
 //				int[] rgbPixelData = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 
 				double x0, y0, x, y, xtemp, ytemp;

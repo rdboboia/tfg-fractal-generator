@@ -10,7 +10,7 @@ import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorPruebasO
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("Creando imagen...");
-		BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
+		BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_3BYTE_BGR);
 		
 		System.out.println("Generando fractal...");
 		MandelbrotsetGeneratorPruebasOptimizacion.generate(img, 360);

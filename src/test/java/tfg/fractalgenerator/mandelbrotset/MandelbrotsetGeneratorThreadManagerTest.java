@@ -80,7 +80,7 @@ class MandelbrotsetGeneratorThreadManagerTest {
 	@Disabled
 	@Test
 	void performanceTest() { // Used only to check generation time while trying to optimize the generation algorithm.
-		BufferedImage image = new BufferedImage(19200, 10800, BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(19200, 10800, BufferedImage.TYPE_3BYTE_BGR);
 		MandelbrotsetPosition position = new MandelbrotsetPosition();
 		position.setZoom(10);
 		

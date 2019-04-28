@@ -247,7 +247,7 @@ public class RealtimeViewPanelScalableBigDecimal extends JPanel {
 			Thread generatorThread = new Thread() {
 				@Override
 				public void run() {
-					image = new BufferedImage(lblImageCointainer.getWidth(), lblImageCointainer.getHeight(), BufferedImage.TYPE_INT_RGB);
+					image = new BufferedImage(lblImageCointainer.getWidth(), lblImageCointainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
 					MandelbrotsetGeneratorScalableBigDecimal generator = new MandelbrotsetGeneratorScalableBigDecimal(image, (int)spinner.getValue());
 					generator.generate(posx, posy, zoom, scale);
 					btnGenerar.setEnabled(true);

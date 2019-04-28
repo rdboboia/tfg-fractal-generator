@@ -57,7 +57,7 @@ public class MandelbrotDynamicImage_skipTestV2 extends JFrame {
 				int height = lblNewLabel.getHeight();
 				int max = 256*256;
 
-				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
 
 				double x0, y0, x, y, xtemp;
 				int iteration = 0;
