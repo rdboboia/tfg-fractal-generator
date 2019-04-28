@@ -6,6 +6,8 @@ import tfg.fractalgenerator.gui.MandelbrotSetGUI;
 import tfg.fractalgenerator.gui.panels.store.GenerationParametersStore;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGeneratorThreadManager;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetPosition;
+import tfg.imageprocessor.ImageProcessorManager;
+import tfg.imageprocessor.ProcessingMode;
 
 import java.awt.image.BufferedImage;
 
@@ -26,6 +28,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JCheckBox;
 
 /**
  * This view takes care of the Mandelbrot's Set generation and it's real time
@@ -118,8 +121,26 @@ public class RealtimeViewPanelScalable extends JPanel {
 	 * A simple text container to inform the user of the application's current status.
 	 */
 	private JLabel lblCurrentStatus;
-	private JLabel lblEscala;
+	
+	/**
+	 * A simple text container.
+	 */
+	private JLabel lblScale;
+	
+	/**
+	 * Sets the generation scale.
+	 */
 	private JSpinner spinnerScale;
+	
+	/**
+	 * Toggle for the negative color image filter.
+	 */
+	private JCheckBox chckbxNegativeFilter;
+	
+	/**
+	 * Toggle for the grayscale image filter.
+	 */
+	private JCheckBox chckbxGrayscaleFilter;
 	
 	/**
 	 * Initialization of the Panel and it's layout.
@@ -131,8 +152,8 @@ public class RealtimeViewPanelScalable extends JPanel {
 		this.position = new MandelbrotsetPosition();
 		
 		JLabel lblDepth = new JLabel("Profunidad:");
-		JLabel lblNewLabel = new JLabel("Profundidad color:");
-		lblNewLabel.setToolTipText("algo");
+		JLabel lblColorDepth = new JLabel("Profundidad color:");
+		lblColorDepth.setToolTipText("algo");
 		JLabel lblStatus = new JLabel("Estado:");
 		
 		JButton btnReturn = new JButton("Volver");
@@ -228,7 +249,29 @@ public class RealtimeViewPanelScalable extends JPanel {
 			}
 		});
 		
-		lblEscala = new JLabel("Escala:");
+		lblScale = new JLabel("Escala:");
+		
+		chckbxNegativeFilter = new JCheckBox("Invertir colores");
+		chckbxNegativeFilter.addActionListener(e -> {
+			if (btnGenerate.isEnabled()) {
+				if (chckbxNegativeFilter.isSelected())
+					activarFiltros();
+				else {
+					ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
+					lblImageContainer.setIcon(new ImageIcon(image));
+				}
+			}
+		});
+		
+		chckbxGrayscaleFilter = new JCheckBox("Escala grises");
+		chckbxGrayscaleFilter.addActionListener(e -> {
+			if (btnGenerate.isEnabled()) {
+				if (chckbxGrayscaleFilter.isSelected())
+					activarFiltros();
+				else
+					updateImage();
+			}
+		});
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -237,16 +280,20 @@ public class RealtimeViewPanelScalable extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(118)
-							.addComponent(btnGenerate, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExport, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnGenerate))
 						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnExport)
 					.addGap(18)
 					.addComponent(lblStatus)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblCurrentStatus)
-					.addPreferredGap(ComponentPlacement.RELATED, 235, Short.MAX_VALUE)
-					.addComponent(lblEscala)
+					.addPreferredGap(ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+					.addComponent(chckbxGrayscaleFilter)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(chckbxNegativeFilter)
+					.addGap(18)
+					.addComponent(lblScale)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(spinnerScale, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
@@ -254,11 +301,11 @@ public class RealtimeViewPanelScalable extends JPanel {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(spinnerDepth, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(lblNewLabel)
+					.addComponent(lblColorDepth)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(spinnerColorDepth, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(btnRestoreDefaults, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+					.addComponent(btnRestoreDefaults)
 					.addGap(18)
 					.addComponent(btnZoomOut)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -271,18 +318,20 @@ public class RealtimeViewPanelScalable extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnReturn)
 						.addComponent(btnGenerate)
-						.addComponent(btnExport)
 						.addComponent(btnZoomIn)
 						.addComponent(btnZoomOut)
 						.addComponent(btnRestoreDefaults)
+						.addComponent(btnExport)
+						.addComponent(lblColorDepth)
+						.addComponent(spinnerColorDepth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblDepth)
 						.addComponent(spinnerDepth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel)
-						.addComponent(spinnerColorDepth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblStatus)
-						.addComponent(lblCurrentStatus)
 						.addComponent(spinnerScale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEscala))
+						.addComponent(lblScale)
+						.addComponent(chckbxNegativeFilter)
+						.addComponent(chckbxGrayscaleFilter)
+						.addComponent(lblStatus)
+						.addComponent(lblCurrentStatus))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblImageContainer, GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
 		);
@@ -323,6 +372,8 @@ public class RealtimeViewPanelScalable extends JPanel {
 		position = new MandelbrotsetPosition();
 		spinnerDepth.setValue(360);
 		spinnerColorDepth.setValue(360);
+		chckbxNegativeFilter.setSelected(false);
+		chckbxGrayscaleFilter.setSelected(false);
 	}
 	
 	/**
@@ -365,6 +416,19 @@ public class RealtimeViewPanelScalable extends JPanel {
 		spinnerScale.setEnabled(setEnabled);
 	}
 	
+	private void activarFiltros() {
+		if (chckbxNegativeFilter.isSelected())
+			ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
+		if (chckbxGrayscaleFilter.isSelected())
+			ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
+		
+		lblImageContainer.setIcon(new ImageIcon(image));
+	}
+	
+	private void desactivarFiltros() {
+		updateImage();
+	}
+	
 	/**
 	 * This method takes care of the creation of the needed threads for the
 	 * generation and real time display of the Mandelbrot's Set. It disables
@@ -380,7 +444,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 			// Updating image size
 			lblImageContainer.setSize(this.getWidth(), this.getHeight()-20);
 			
-			image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_INT_RGB);
+			image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
 			
 			// Generator thread
 			Thread generatorThread = new Thread() {
@@ -389,6 +453,8 @@ public class RealtimeViewPanelScalable extends JPanel {
 					long s = System.currentTimeMillis();
 					
 					MandelbrotsetGeneratorThreadManager.generate(image, (int)spinnerDepth.getValue(), (int)spinnerColorDepth.getValue(), position);
+					
+					activarFiltros();
 					
 					long f = System.currentTimeMillis();
 					
