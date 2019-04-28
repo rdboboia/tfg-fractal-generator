@@ -1,5 +1,6 @@
 package tfg.imageprocessor;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +51,24 @@ class ImageProcessorTest {
 				fail("Alpha channel was altered!");
 			}
 		}
+	}
+	
+	@Test
+	void invertColorsReinvertTest() {
+		int step = 3;
+		ImageProcessor.invertColors(bytes, step);
+		ImageProcessor.invertColors(bytes, step);
+
+		assertArrayEquals(bytes, bytesCopy);
+	}
+	
+	@Test
+	void invertColorsReinvertTestWithAlphaChannel() {
+		int step = 4;
+		ImageProcessor.invertColors(bytes, step);
+		ImageProcessor.invertColors(bytes, step);
+
+		assertArrayEquals(bytes, bytesCopy);
 	}
 	
 	@Test
