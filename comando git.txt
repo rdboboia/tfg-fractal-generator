@@ -1,0 +1,2 @@
+Comando para traerse archivos de otra rama:
+	git checkout imageProcessing src/main/java/tfg/imageprocessor
