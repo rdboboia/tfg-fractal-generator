@@ -3,6 +3,7 @@ package tfg.fractalgenerator.gui.panels;
 import javax.swing.JPanel;
 
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
+import tfg.fractalgenerator.gui.panels.store.ActiveFiltersStore;
 import tfg.fractalgenerator.gui.panels.store.GenerationParametersStore;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGeneratorThreadManager;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetPosition;
@@ -193,12 +194,17 @@ public class RealtimeViewPanelScalable extends JPanel {
 		btnExport = new JButton("Exportar");
 		btnExport.setEnabled(false);
 		btnExport.addActionListener(e -> {
-			GenerationParametersStore store = GenerationParametersStore.getInstance();
-			store.setWidth(lblImageContainer.getWidth());
-			store.setHeight(lblImageContainer.getHeight());
-			store.setDepth((int)spinnerDepth.getValue());
-			store.setColorDepth((int)spinnerColorDepth.getValue());
-			store.setPosition(position);
+			GenerationParametersStore genParamStore = GenerationParametersStore.getInstance();
+			genParamStore.setWidth(lblImageContainer.getWidth());
+			genParamStore.setHeight(lblImageContainer.getHeight());
+			genParamStore.setDepth((int)spinnerDepth.getValue());
+			genParamStore.setColorDepth((int)spinnerColorDepth.getValue());
+			genParamStore.setPosition(position);
+			
+			ActiveFiltersStore activeFiltersStore = ActiveFiltersStore.getInstance();
+			activeFiltersStore.setNegativeFilterActive(chckbxNegativeFilter.isSelected());
+			activeFiltersStore.setGrayscaleFilterActive(chckbxGrayscaleFilter.isSelected());
+			
 			MandelbrotSetGUI.getInstance().changeCard(ExportToFilePanel.NAME);
 		});
 		
@@ -254,22 +260,14 @@ public class RealtimeViewPanelScalable extends JPanel {
 		chckbxNegativeFilter = new JCheckBox("Invertir colores");
 		chckbxNegativeFilter.addActionListener(e -> {
 			if (btnGenerate.isEnabled()) {
-				if (chckbxNegativeFilter.isSelected())
-					activarFiltros();
-				else {
-					ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
-					lblImageContainer.setIcon(new ImageIcon(image));
-				}
+				toggleNegativeFilter();
 			}
 		});
 		
 		chckbxGrayscaleFilter = new JCheckBox("Escala grises");
 		chckbxGrayscaleFilter.addActionListener(e -> {
 			if (btnGenerate.isEnabled()) {
-				if (chckbxGrayscaleFilter.isSelected())
-					activarFiltros();
-				else
-					updateImage();
+				toggleGrayscaleFilter();
 			}
 		});
 		
@@ -416,7 +414,12 @@ public class RealtimeViewPanelScalable extends JPanel {
 		spinnerScale.setEnabled(setEnabled);
 	}
 	
-	private void activarFiltros() {
+	/**
+	 * This method applies the current selected filters to the generated image.
+	 * It first applies, if needed, the negative filter and then, if needed, the
+	 * grayscale filter.
+	 */
+	private void applyFilters() {
 		if (chckbxNegativeFilter.isSelected())
 			ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
 		if (chckbxGrayscaleFilter.isSelected())
@@ -425,8 +428,29 @@ public class RealtimeViewPanelScalable extends JPanel {
 		lblImageContainer.setIcon(new ImageIcon(image));
 	}
 	
-	private void desactivarFiltros() {
-		updateImage();
+	/**
+	 * This method applies the negative filter to the current image and updates
+	 * the view panel. It can be used to toggle the negative filter on and off
+	 * without regenerating the fractal.
+	 */
+	private void toggleNegativeFilter() {
+		ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
+		lblImageContainer.setIcon(new ImageIcon(image));
+	}
+	
+	/**
+	 * This method applies the grayscale filter to the current image and updates
+	 * the view panel. When the filter is turned on there's no need to generate
+	 * again the fractal. However, when disabling this filter, a regeneration is
+	 * needed since the grayscale filter looses color information.
+	 */
+	private void toggleGrayscaleFilter() {
+		if (chckbxGrayscaleFilter.isSelected()) {
+			ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
+			lblImageContainer.setIcon(new ImageIcon(image));
+		} else {
+			updateImage();
+		}
 	}
 	
 	/**
@@ -450,13 +474,14 @@ public class RealtimeViewPanelScalable extends JPanel {
 			Thread generatorThread = new Thread() {
 				@Override
 				public void run() {
-					long s = System.currentTimeMillis();
+					long s = System.currentTimeMillis(); // Start time
 					
 					MandelbrotsetGeneratorThreadManager.generate(image, (int)spinnerDepth.getValue(), (int)spinnerColorDepth.getValue(), position);
 					
-					activarFiltros();
+					// Apply the currently selected image filters.
+					applyFilters();
 					
-					long f = System.currentTimeMillis();
+					long f = System.currentTimeMillis(); // Finish time
 					
 					lblCurrentStatus.setText("finalizado (" + (f - s) + " ms).");
 					btnExport.setEnabled(true);
@@ -476,6 +501,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 						} catch (InterruptedException e) {
 							interrupt();
 						}
+						
 						lblImageContainer.setIcon(new ImageIcon(image));
 					}
 				}

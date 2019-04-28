@@ -5,9 +5,12 @@ import javax.swing.JPanel;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.gui.FileSaver;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
+import tfg.fractalgenerator.gui.panels.store.ActiveFiltersStore;
 import tfg.fractalgenerator.gui.panels.store.GenerationParametersStore;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetGeneratorThreadManager;
 import tfg.fractalgenerator.mandelbrotset.MandelbrotsetPosition;
+import tfg.imageprocessor.ImageProcessorManager;
+import tfg.imageprocessor.ProcessingMode;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -26,6 +29,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.swing.JCheckBox;
 
 public class ExportToFilePanel extends JPanel {
 	/**
@@ -89,6 +93,9 @@ public class ExportToFilePanel extends JPanel {
 		JPanel positionPanel = new JPanel();
 		positionPanel.setBorder(new TitledBorder(null, "Posici\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
+		JPanel filtersPanel = new JPanel();
+		filtersPanel.setBorder(new TitledBorder(null, "Filters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		
 		JLabel lblEjeX = new JLabel("Eje x:");
 		
 		JSpinner spinnerXAxis = new JSpinner();
@@ -114,6 +121,10 @@ public class ExportToFilePanel extends JPanel {
 		JSpinner spinnerColorDepth = new JSpinner();
 		spinnerColorDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
 		
+		JCheckBox chckbxGrayscaleFilter = new JCheckBox("Convert the colors to grayscale");
+		
+		JCheckBox chckbxNegativeFilter = new JCheckBox("Invert the colors");
+		
 		JButton btnGenerateAndExport = new JButton("Generar y exportar");
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnGenerateAndExport.addActionListener(e -> {
@@ -123,7 +134,7 @@ public class ExportToFilePanel extends JPanel {
 					btnGenerateAndExport.setEnabled(false);
 					
 					lblActualStatus.setText("creando imagen...");
-					BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImage.TYPE_INT_RGB);
+					BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImage.TYPE_3BYTE_BGR);
 					
 					lblActualStatus.setText("generando fractal...");
 					MandelbrotsetPosition position = new MandelbrotsetPosition();
@@ -132,6 +143,13 @@ public class ExportToFilePanel extends JPanel {
 					position.setZoom((double)spinnerZoom.getValue());
 					position.setScale((double)spinnerScale.getValue());
 					MandelbrotsetGeneratorThreadManager.generate(image, (int)spinnerDepth.getValue(), (int)spinnerColorDepth.getValue(), position);
+					
+					lblActualStatus.setText("aplicando filtros...");
+					if (chckbxNegativeFilter.isSelected())
+						ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
+					if (chckbxGrayscaleFilter.isSelected())
+						ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
+					
 					
 					lblActualStatus.setText("exportación de archivo...");
 					FileSaver.saveFile(image, (ImageFormat)comboBoxFormat.getSelectedItem());
@@ -151,6 +169,9 @@ public class ExportToFilePanel extends JPanel {
 						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(filtersPanel, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
 						.addComponent(btnReturn, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
@@ -170,16 +191,39 @@ public class ExportToFilePanel extends JPanel {
 					.addComponent(btnReturn)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(propertiesPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(positionPanel, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+						.addComponent(propertiesPanel, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+						.addComponent(positionPanel, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(filtersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblStatus)
 						.addComponent(lblActualStatus))
 					.addContainerGap())
 		);
+		
+		GroupLayout gl_filtersPanel = new GroupLayout(filtersPanel);
+		gl_filtersPanel.setHorizontalGroup(
+			gl_filtersPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_filtersPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_filtersPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(chckbxNegativeFilter)
+						.addComponent(chckbxGrayscaleFilter))
+					.addContainerGap(1065, Short.MAX_VALUE))
+		);
+		gl_filtersPanel.setVerticalGroup(
+			gl_filtersPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_filtersPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(chckbxNegativeFilter)
+					.addGap(18)
+					.addComponent(chckbxGrayscaleFilter)
+					.addContainerGap(20, Short.MAX_VALUE))
+		);
+		filtersPanel.setLayout(gl_filtersPanel);
 		
 		GroupLayout gl_positionPanel = new GroupLayout(positionPanel);
 		gl_positionPanel.setHorizontalGroup(
@@ -280,18 +324,22 @@ public class ExportToFilePanel extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent e) {
-				GenerationParametersStore store = GenerationParametersStore.getInstance();
+				GenerationParametersStore genParamStore = GenerationParametersStore.getInstance();
 				
-				spinnerWidth.setValue(store.getWidth());
-				spinnerHeight.setValue(store.getHeight());
+				spinnerWidth.setValue(genParamStore.getWidth());
+				spinnerHeight.setValue(genParamStore.getHeight());
 				
-				spinnerXAxis.setValue(store.getPosition().getPosx());
-				spinnerYAxis.setValue(store.getPosition().getPosy());
-				spinnerZoom.setValue(store.getPosition().getZoom());
-				spinnerScale.setValue(store.getPosition().getScale());
+				spinnerXAxis.setValue(genParamStore.getPosition().getPosx());
+				spinnerYAxis.setValue(genParamStore.getPosition().getPosy());
+				spinnerZoom.setValue(genParamStore.getPosition().getZoom());
+				spinnerScale.setValue(genParamStore.getPosition().getScale());
 				
-				spinnerDepth.setValue(store.getDepth());
-				spinnerColorDepth.setValue(store.getColorDepth());
+				spinnerDepth.setValue(genParamStore.getDepth());
+				spinnerColorDepth.setValue(genParamStore.getColorDepth());
+				
+				ActiveFiltersStore activeFiltersStore = ActiveFiltersStore.getInstance();
+				chckbxNegativeFilter.setSelected(activeFiltersStore.isNegativeFilterActive());
+				chckbxGrayscaleFilter.setSelected(activeFiltersStore.isGrayscaleFilterActive());
 			}
 		});
 	}
