@@ -43,6 +43,8 @@ public class ImageProcessorManager {
 			case GRAYSCALE:
 				ImageProcessor.convertToGrayscale(pixels, step);
 				break;
+			default:
+				break;
 		}
 	}
 }
