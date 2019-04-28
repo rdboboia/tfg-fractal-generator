@@ -20,7 +20,7 @@ class ImageExportTest {
 	@Test
 	void correctExecutionTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "correctExecutionTest", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "correctExecutionTest", true);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
@@ -36,7 +36,7 @@ class ImageExportTest {
 	@Test
 	void incorrectImageSizeTest() {
 		try {
-			ImageExport.export(new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "imageSizeTest", true);
+			ImageExport.export(new BufferedImage(0, 0, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "imageSizeTest", true);
 			fail(EXCEPTION_EXPECTED);
 		} catch (IllegalArgumentException e) {
 			// Expected
@@ -74,7 +74,7 @@ class ImageExportTest {
 	@Test
 	void incorrectFileFormatTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), null, "Z:\\", "fileFormatTest", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), null, "Z:\\", "fileFormatTest", true);
 			fail(EXCEPTION_EXPECTED);
 		} catch (NullPointerException e) {
 			// Expected
@@ -93,10 +93,10 @@ class ImageExportTest {
 	@Test
 	void correctFileFormatTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.BMP, "Z:\\", "fileFormatTest", false);
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.JPEG, "Z:\\", "fileFormatTest", false);
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.JPG, "Z:\\", "fileFormatTest", false);
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "fileFormatTest", false);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.BMP, "Z:\\", "fileFormatTest", false);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.JPEG, "Z:\\", "fileFormatTest", false);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.JPG, "Z:\\", "fileFormatTest", false);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "fileFormatTest", false);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
@@ -114,7 +114,7 @@ class ImageExportTest {
 	@Test
 	void incorrectDriveLetterTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Y:\\", "driveLetterTest", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Y:\\", "driveLetterTest", true);
 			fail(EXCEPTION_EXPECTED);
 		} catch (NullPointerException e) {
 			// Expected
@@ -128,7 +128,7 @@ class ImageExportTest {
 	@Test
 	void incorrectFileDirectoryTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\miCarpeta", "fileDirectotyTest", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\miCarpeta", "fileDirectotyTest", true);
 			fail(EXCEPTION_EXPECTED);
 		} catch (NullPointerException e) {
 			// Expected
@@ -142,7 +142,7 @@ class ImageExportTest {
 	@Test
 	void fileNameTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "", true);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
@@ -158,13 +158,13 @@ class ImageExportTest {
 	@Test
 	void overrideTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "override", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "override", true);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
 		
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "override", true);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "override", true);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
@@ -180,13 +180,13 @@ class ImageExportTest {
 	@Test
 	void noOverrideTest() {
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "alreadyExists", false);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "alreadyExists", false);
 		} catch (IOException e) {
 			fail(NO_EXCEPTION_EXPECTED);
 		}
 		
 		try {
-			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), ImageFormat.PNG, "Z:\\", "alreadyExists", false);
+			ImageExport.export(new BufferedImage(1, 1, BufferedImage.TYPE_3BYTE_BGR), ImageFormat.PNG, "Z:\\", "alreadyExists", false);
 			fail("An FileAlreadyExistsException should be thrown!");
 		} catch (FileAlreadyExistsException e) {
 			// Expected
