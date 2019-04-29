@@ -31,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JCheckBox;
+import java.awt.event.ActionEvent;
 
 public class ExportToFilePanel extends JPanel {
 	/**
@@ -77,8 +78,6 @@ public class ExportToFilePanel extends JPanel {
 		JLabel lblHeight = new JLabel("(alto)");
 		lblHeight.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel lblDepth = new JLabel("Profundidad:");
-		
 		JSpinner spinnerDepth = new JSpinner();
 		spinnerDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
 		
@@ -90,6 +89,10 @@ public class ExportToFilePanel extends JPanel {
 		JComboBox<ImageFormat> comboBoxFormat = new JComboBox<>();
 		comboBoxFormat.setModel(new DefaultComboBoxModel<ImageFormat>(ImageFormat.values()));
 		comboBoxFormat.setSelectedIndex(comboBoxFormat.getModel().getSize()-1);
+		
+		JLabel lblDepth = new JLabel("Profundidad:");
+		
+		JLabel lblProfundidadColor = new JLabel("Profundidad color:");
 		
 		JPanel propertiesPanel = new JPanel();
 		propertiesPanel.setBorder(new TitledBorder(null, "Propiedades", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -113,18 +116,26 @@ public class ExportToFilePanel extends JPanel {
 		JLabel lblZoom = new JLabel("Zoom:");
 		
 		JSpinner spinnerZoom = new JSpinner();
-		spinnerZoom.setModel(new SpinnerNumberModel(1d, 1d, null, 1d));
+		spinnerZoom.setModel(new SpinnerNumberModel(256d, 1d, null, 1d));
 		
 		JLabel lblEscala = new JLabel("Escala:");
 		
 		JSpinner spinnerScale = new JSpinner();
-		spinnerScale.setModel(new SpinnerNumberModel(0.003125d, null, null, 1d));
-		
-		JLabel lblColores = new JLabel("Colores:");
+		spinnerScale.setModel(new SpinnerNumberModel(1d, null, null, 1d));
 		
 		JCheckBox chckbxGrayscaleFilter = new JCheckBox("Convert the colors to grayscale");
 		
 		JCheckBox chckbxNegativeFilter = new JCheckBox("Invert the colors");
+		
+		JButton btnX = new JButton("x2");
+		btnX.addActionListener(e -> {
+			spinnerZoom.setValue((double)spinnerZoom.getValue() * 2);
+		});
+		
+		JButton button = new JButton("/2");
+		button.addActionListener(e -> {
+			spinnerZoom.setValue((double)spinnerZoom.getValue() / 2);
+		});
 		
 		JButton btnGenerateAndExport = new JButton("Generar y exportar");
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -240,8 +251,13 @@ public class ExportToFilePanel extends JPanel {
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(spinnerXAxis, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
 						.addComponent(spinnerYAxis, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
-						.addComponent(spinnerZoom, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
-						.addComponent(spinnerScale, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE))
+						.addComponent(spinnerScale, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+						.addGroup(gl_positionPanel.createSequentialGroup()
+							.addComponent(btnX)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(spinnerZoom, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_positionPanel.setVerticalGroup(
@@ -258,12 +274,14 @@ public class ExportToFilePanel extends JPanel {
 					.addGap(18)
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblZoom)
-						.addComponent(spinnerZoom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(spinnerZoom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnX)
+						.addComponent(button))
 					.addGap(18)
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblEscala)
 						.addComponent(spinnerScale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(222, Short.MAX_VALUE))
+					.addContainerGap(29, Short.MAX_VALUE))
 		);
 		positionPanel.setLayout(gl_positionPanel);
 		
@@ -273,27 +291,26 @@ public class ExportToFilePanel extends JPanel {
 				.addGroup(gl_propertiesPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_propertiesPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblFormat)
 						.addGroup(gl_propertiesPanel.createSequentialGroup()
-							.addComponent(lblResolution)
-							.addGap(50)
-							.addComponent(spinnerWidth, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblWidth)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(spinnerHeight, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblHeight))
-						.addGroup(gl_propertiesPanel.createSequentialGroup()
-							.addGroup(gl_propertiesPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblDepth)
-								.addComponent(lblColores))
-							.addGap(43)
 							.addGroup(gl_propertiesPanel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(spinnerDepth, GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+								.addComponent(lblResolution)
+								.addComponent(lblDepth, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblProfundidadColor))
+							.addGap(18)
+							.addGroup(gl_propertiesPanel.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(comboBoxFormat, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(spinnerColorDepth)))
-						.addComponent(lblFormat))
-					.addContainerGap(934, Short.MAX_VALUE))
+								.addComponent(spinnerColorDepth)
+								.addComponent(spinnerDepth)
+								.addGroup(gl_propertiesPanel.createSequentialGroup()
+									.addComponent(spinnerWidth, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblWidth)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(spinnerHeight, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblHeight)))))
+					.addContainerGap(300, Short.MAX_VALUE))
 		);
 		gl_propertiesPanel.setVerticalGroup(
 			gl_propertiesPanel.createParallelGroup(Alignment.LEADING)
@@ -311,13 +328,13 @@ public class ExportToFilePanel extends JPanel {
 						.addComponent(spinnerDepth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_propertiesPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblColores)
+						.addComponent(lblProfundidadColor)
 						.addComponent(spinnerColorDepth, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_propertiesPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblFormat)
 						.addComponent(comboBoxFormat, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(222, Short.MAX_VALUE))
+					.addContainerGap(29, Short.MAX_VALUE))
 		);
 		propertiesPanel.setLayout(gl_propertiesPanel);
 		setLayout(groupLayout);
