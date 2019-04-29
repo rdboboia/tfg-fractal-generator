@@ -44,16 +44,6 @@ public class MandelbrotSetGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Main content panel for the {@link MandelbrotSetGUI} {@code Frame}.
-	 */
-	private JPanel contentPanel;
-	
-	/**
-	 * A list with all the panel names that are inside the main panel.
-	 */
-	private List<String> panels;
-	
-	/**
 	 * Initial size for the main panel that is also used in all sub-panels.
 	 * <br>
 	 * Also useful for development since WindowBuilder has its limitations and
@@ -75,6 +65,16 @@ public class MandelbrotSetGUI extends JFrame {
 		
 		return instance;
 	}
+	
+	/**
+	 * Main content panel for the {@link MandelbrotSetGUI} {@code Frame}.
+	 */
+	private JPanel contentPanel;
+	
+	/**
+	 * A list with all the panel names that are inside the main panel.
+	 */
+	private List<String> panels;
 	
 	/**
 	 * Public method designed to facilitate to the programmer the navigation

@@ -55,6 +55,14 @@ public class RealtimeViewPanelScalable extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	/**
+	 * Static reference to the name of this class which is used as the name
+	 * of the component. The name is based on the {@code Class}'s name. Useful
+	 * for the card layout since it makes a lot easier to have access to a
+	 * component's name. 
+	 */
+	public static final String NAME = RealtimeViewPanelScalable.class.getSimpleName();
+	
+	/**
 	 * The image where the Mandelbrot's Set will be generated which is the same
 	 * image that can be exported later, as well as the image used as a
 	 * {@link ImageIcon} for the current state display.
@@ -66,14 +74,6 @@ public class RealtimeViewPanelScalable extends JPanel {
 	 * the zoom and the scale. See {@link MandelbrotsetPosition}.
 	 */
 	private MandelbrotsetPosition position;
-	
-	/**
-	 * Static reference to the name of this class which is used as the name
-	 * of the component. The name is based on the {@code Class}'s name. Useful
-	 * for the card layout since it makes a lot easier to have access to a
-	 * component's name. 
-	 */
-	public static final String NAME = RealtimeViewPanelScalable.class.getSimpleName();
 	
 	/**
 	 * A {@link JLabel} is used as a container {@link Component} to display
