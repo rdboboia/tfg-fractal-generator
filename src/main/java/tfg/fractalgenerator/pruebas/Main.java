@@ -3,6 +3,7 @@ package tfg.fractalgenerator.pruebas;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.exportimage.ImageExport;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorPruebasOptimizacion;
@@ -10,7 +11,7 @@ import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorPruebasO
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("Creando imagen...");
-		BufferedImage img = new BufferedImage(1920, 1080, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage img = new BufferedImage(1920, 1080, BufferedImageType.getBufferedImageType());
 		
 		System.out.println("Generando fractal...");
 		MandelbrotsetGeneratorPruebasOptimizacion.generate(img, 360);

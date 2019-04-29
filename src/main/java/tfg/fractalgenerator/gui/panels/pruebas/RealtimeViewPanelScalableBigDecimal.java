@@ -2,6 +2,7 @@ package tfg.fractalgenerator.gui.panels.pruebas;
 
 import javax.swing.JPanel;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.gui.FileSaver;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
@@ -247,7 +248,7 @@ public class RealtimeViewPanelScalableBigDecimal extends JPanel {
 			Thread generatorThread = new Thread() {
 				@Override
 				public void run() {
-					image = new BufferedImage(lblImageCointainer.getWidth(), lblImageCointainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+					image = new BufferedImage(lblImageCointainer.getWidth(), lblImageCointainer.getHeight(), BufferedImageType.getBufferedImageType());
 					MandelbrotsetGeneratorScalableBigDecimal generator = new MandelbrotsetGeneratorScalableBigDecimal(image, (int)spinner.getValue());
 					generator.generate(posx, posy, zoom, scale);
 					btnGenerar.setEnabled(true);

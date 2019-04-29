@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
+
 public class FractalMandelbrot_PrimeraOptimizacion {
 
 	public static void main(String[] args) {
@@ -14,7 +16,7 @@ public class FractalMandelbrot_PrimeraOptimizacion {
 		int max = 256;
 		int max_color = 256 * 256 * 256;
 		
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage img = new BufferedImage(width, height, BufferedImageType.getBufferedImageType());
 		
 		double x0, y0, x, y, xtemp;
 		int iteration;

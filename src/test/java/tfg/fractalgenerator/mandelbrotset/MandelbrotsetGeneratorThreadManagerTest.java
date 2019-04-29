@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.exportimage.ImageExport;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 
@@ -23,7 +24,7 @@ class MandelbrotsetGeneratorThreadManagerTest {
 			BufferedImage imageTest = ImageIO.read(new File("imageTest.png"));
 			byte[] imageTestPixels = ((DataBufferByte) imageTest.getRaster().getDataBuffer()).getData();
 			
-			BufferedImage renderedImage = new BufferedImage(3840, 2160, BufferedImage.TYPE_3BYTE_BGR);
+			BufferedImage renderedImage = new BufferedImage(3840, 2160, BufferedImageType.getBufferedImageType());
 			MandelbrotsetGeneratorThreadManager.generate(renderedImage, 360, 360, new MandelbrotsetPosition(0, 0, 3, 4d / 1280));
 			byte[] renderedImagePixels = ((DataBufferByte) renderedImage.getRaster().getDataBuffer()).getData();
 			
@@ -43,7 +44,7 @@ class MandelbrotsetGeneratorThreadManagerTest {
 			BufferedImage imageTest = ImageIO.read(new File("imageTest.png"));
 			byte[] imageTestPixels = ((DataBufferByte) imageTest.getRaster().getDataBuffer()).getData();
 			
-			BufferedImage renderedImage = new BufferedImage(3840, 2160, BufferedImage.TYPE_3BYTE_BGR);
+			BufferedImage renderedImage = new BufferedImage(3840, 2160, BufferedImageType.getBufferedImageType());
 			MandelbrotsetGeneratorThreadManager.generate(renderedImage, 360, 360, new MandelbrotsetPosition(0, 0, 3, 4d / 1280), 1);
 			byte[] renderedImagePixels = ((DataBufferByte) renderedImage.getRaster().getDataBuffer()).getData();
 			
@@ -63,7 +64,7 @@ class MandelbrotsetGeneratorThreadManagerTest {
 			BufferedImage imageTest = ImageIO.read(new File("imageTest.png"));
 			byte[] imageTestPixels = ((DataBufferByte) imageTest.getRaster().getDataBuffer()).getData();
 			
-			BufferedImage renderedImage = new BufferedImage(3840, 2160, BufferedImage.TYPE_3BYTE_BGR);
+			BufferedImage renderedImage = new BufferedImage(3840, 2160, BufferedImageType.getBufferedImageType());
 			MandelbrotsetGeneratorThreadManager.generate(renderedImage, 360, 360, new MandelbrotsetPosition(0, 0, 3, 4d / 1280), 3);
 			byte[] renderedImagePixels = ((DataBufferByte) renderedImage.getRaster().getDataBuffer()).getData();
 			
@@ -80,7 +81,7 @@ class MandelbrotsetGeneratorThreadManagerTest {
 	@Disabled
 	@Test
 	void performanceTest() { // Used only to check generation time while trying to optimize the generation algorithm.
-		BufferedImage image = new BufferedImage(19200, 10800, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(19200, 10800, BufferedImageType.getBufferedImageType());
 		MandelbrotsetPosition position = new MandelbrotsetPosition();
 		position.setZoom(10);
 		

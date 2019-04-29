@@ -2,6 +2,7 @@ package tfg.fractalgenerator.gui.panels;
 
 import javax.swing.JPanel;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
 import tfg.fractalgenerator.gui.panels.store.ActiveFiltersStore;
 import tfg.fractalgenerator.gui.panels.store.GenerationParametersStore;
@@ -468,7 +469,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 			// Updating image size
 			lblImageContainer.setSize(this.getWidth(), this.getHeight()-20);
 			
-			image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+			image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImageType.getBufferedImageType());
 			
 			// Generator thread
 			Thread generatorThread = new Thread() {

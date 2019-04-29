@@ -2,6 +2,7 @@ package tfg.fractalgenerator.gui.panels.pruebas;
 
 import javax.swing.JPanel;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.gui.FileSaver;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
@@ -136,7 +137,7 @@ public class RealtimeViewPanel_OFF extends JPanel {
 		Thread generatorThread = new Thread() {
 			@Override
 			public void run() {
-				image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+				image = new BufferedImage(lblImageContainer.getWidth(), lblImageContainer.getHeight(), BufferedImageType.getBufferedImageType());
 //				MandelbrotsetGenerator.generate(image, 360);
 				
 				MandelbrotsetGeneratorThread_Optimizations[] t = new MandelbrotsetGeneratorThread_Optimizations[10];

@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
+
 public class FractalMandelbrot {
 
 	public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class FractalMandelbrot {
 		int height = 1080;
 		int max = 256;
 		
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage img = new BufferedImage(width, height, BufferedImageType.getBufferedImageType());
 		
 		for (int i = 0 ; i < height ; i++) {
 			for (int j = 0 ; j < width ; j++) {

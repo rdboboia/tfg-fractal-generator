@@ -2,6 +2,7 @@ package tfg.fractalgenerator.gui.panels;
 
 import javax.swing.JPanel;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.gui.FileSaver;
 import tfg.fractalgenerator.gui.MandelbrotSetGUI;
@@ -134,7 +135,7 @@ public class ExportToFilePanel extends JPanel {
 					btnGenerateAndExport.setEnabled(false);
 					
 					lblActualStatus.setText("creando imagen...");
-					BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImage.TYPE_3BYTE_BGR);
+					BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImageType.getBufferedImageType());
 					
 					lblActualStatus.setText("generando fractal...");
 					MandelbrotsetPosition position = new MandelbrotsetPosition();

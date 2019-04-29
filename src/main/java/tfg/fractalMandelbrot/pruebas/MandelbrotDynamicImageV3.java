@@ -8,6 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tfg.fractalgenerator.exportimage.BufferedImageType;
+
 import javax.swing.JLabel;
 
 public class MandelbrotDynamicImageV3 extends JFrame {
@@ -55,7 +58,7 @@ public class MandelbrotDynamicImageV3 extends JFrame {
 				int max = 256*256;
 //				int max_color = 256;
 
-				BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+				BufferedImage img = new BufferedImage(width, height, BufferedImageType.getBufferedImageType());
 
 				double x0, y0, x, y, xtemp;
 				int iteration;

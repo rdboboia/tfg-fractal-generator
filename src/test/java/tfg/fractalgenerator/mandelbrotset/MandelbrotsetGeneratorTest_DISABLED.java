@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import tfg.fractalgenerator.exportimage.BufferedImageType;
 import tfg.fractalgenerator.exportimage.ImageExport;
 import tfg.fractalgenerator.exportimage.ImageFormat;
 import tfg.fractalgenerator.mandelbrotset.pruebas.MandelbrotsetGeneratorPruebasOptimizacion;
@@ -29,7 +30,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorTest() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImageType.getBufferedImageType());
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -48,7 +49,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV2Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImageType.getBufferedImageType());
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -67,7 +68,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV3Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImageType.getBufferedImageType());
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -86,7 +87,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV4Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImageType.getBufferedImageType());
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -105,7 +106,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV5Test() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImageType.getBufferedImageType());
 		long s, f;
 
 		s = System.currentTimeMillis();
@@ -124,7 +125,7 @@ class MandelbrotsetGeneratorTest_DISABLED {
 	@Disabled
 	@Test
 	void generatorV4parTest() {
-		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImageType.getBufferedImageType());
 		long s, f;
 
 		s = System.currentTimeMillis();

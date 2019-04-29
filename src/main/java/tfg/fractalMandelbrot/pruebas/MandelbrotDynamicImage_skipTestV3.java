@@ -11,6 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import tfg.fractalgenerator.exportimage.BufferedImageType;
+
 import javax.swing.JLabel;
 
 public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
@@ -53,7 +56,7 @@ public class MandelbrotDynamicImage_skipTestV3 extends JFrame {
 		
 		int width = lblNewLabel.getWidth();
 		int height = lblNewLabel.getHeight();
-		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage img = new BufferedImage(width, height, BufferedImageType.getBufferedImageType());
 		
 		int max = 256*256*4;
 		int step = 64;
