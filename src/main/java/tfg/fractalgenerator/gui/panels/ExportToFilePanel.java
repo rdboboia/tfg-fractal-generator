@@ -19,11 +19,13 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import java.awt.image.BufferedImage;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
 
@@ -31,7 +33,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import javax.swing.JCheckBox;
-import java.awt.event.ActionEvent;
 
 public class ExportToFilePanel extends JPanel {
 	/**
@@ -46,6 +47,9 @@ public class ExportToFilePanel extends JPanel {
 	 * component's name. 
 	 */
 	public static final String NAME = ExportToFilePanel.class.getSimpleName();
+	private JSpinner spinnerWidth;
+	private JSpinner spinnerHeight;
+	private JSpinner spinnerZoom;
 	
 	/**
 	 * Initialization of the Panel and it's layout.
@@ -66,13 +70,13 @@ public class ExportToFilePanel extends JPanel {
 		
 		JLabel lblResolution = new JLabel("Resolución:");
 		
-		JSpinner spinnerWidth = new JSpinner();
+		spinnerWidth = new JSpinner();
 		spinnerWidth.setModel(new SpinnerNumberModel(3840, 1, null, 1));
 		
 		JLabel lblWidth = new JLabel("(ancho)");
 		lblWidth.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JSpinner spinnerHeight = new JSpinner();
+		spinnerHeight = new JSpinner();
 		spinnerHeight.setModel(new SpinnerNumberModel(2160, 1, null, 1));
 		
 		JLabel lblHeight = new JLabel("(alto)");
@@ -115,7 +119,7 @@ public class ExportToFilePanel extends JPanel {
 		
 		JLabel lblZoom = new JLabel("Zoom:");
 		
-		JSpinner spinnerZoom = new JSpinner();
+		spinnerZoom = new JSpinner();
 		spinnerZoom.setModel(new SpinnerNumberModel(256d, 1d, null, 1d));
 		
 		JLabel lblEscala = new JLabel("Escala:");
@@ -137,41 +141,85 @@ public class ExportToFilePanel extends JPanel {
 			spinnerZoom.setValue((double)spinnerZoom.getValue() / 2);
 		});
 		
+		JButton btn720p = new JButton("1280 x 720 (720p)");
+		btn720p.addActionListener(e -> {
+			changeCurrentResolution(1280, 720);
+		});
+		
+		JButton btn1080p = new JButton("1920 x 1080 (1080p)");
+		btn1080p.addActionListener(e -> {
+			changeCurrentResolution(1920, 1080);
+		});
+		
+		JButton btn1440p = new JButton("2560 x 1440 (1440p)");
+		btn1440p.addActionListener(e -> {
+			changeCurrentResolution(2560, 1440);
+		});
+		
+		JButton btn4k = new JButton("3840 x 2160 (4K)");
+		btn4k.addActionListener(e -> {
+			changeCurrentResolution(3840, 2160);
+		});
+		
+		JButton btn8k = new JButton("7680 x 4320 (8K)");
+		btn8k.addActionListener(e -> {
+			changeCurrentResolution(4680, 4320);
+		});
+		
+		JButton btn16k = new JButton("15360 x 8640 (16K)");
+		btn16k.addActionListener(e -> {
+			changeCurrentResolution(15360, 8640);
+		});
+		
+		JButton btn32k = new JButton("30720 x 17280 (32K)");
+		btn32k.addActionListener(e -> {
+			changeCurrentResolution(30720, 17280);
+		});
+		
 		JButton btnGenerateAndExport = new JButton("Generar y exportar");
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnGenerateAndExport.addActionListener(e -> {
-			new Thread() {
-				@Override
-				public void run() {
-					btnGenerateAndExport.setEnabled(false);
-					
-					lblActualStatus.setText("creando imagen...");
-					BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImageType.getBufferedImageType());
-					
-					lblActualStatus.setText("generando fractal...");
-					MandelbrotsetPosition position = new MandelbrotsetPosition();
-					position.setPosx((double)spinnerXAxis.getValue());
-					position.setPosy((double)spinnerYAxis.getValue());
-					position.setZoom((double)spinnerZoom.getValue());
-					position.setScale((double)spinnerScale.getValue());
-					MandelbrotsetGeneratorThreadManager.generate(image, (int)spinnerDepth.getValue(), (int)spinnerColorDepth.getValue(), position);
-					
-					lblActualStatus.setText("aplicando filtros...");
-					if (chckbxNegativeFilter.isSelected())
-						ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
-					if (chckbxGrayscaleFilter.isSelected())
-						ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
-					
-					
-					lblActualStatus.setText("exportación de archivo...");
-					FileSaver.saveFile(image, (ImageFormat)comboBoxFormat.getSelectedItem());
-					
-					lblActualStatus.setText("finalizado.");
-					
-					btnGenerateAndExport.setEnabled(true);
-				}
-			}.start();
+			double pixelCount = (int)spinnerWidth.getValue() * (int)spinnerHeight.getValue();
+			
+			if (pixelCount > Double.MAX_VALUE || pixelCount < 0)
+				JOptionPane.showMessageDialog(this, "La resolución introducida es demasiado grande.", "Resolución no válida", JOptionPane.ERROR_MESSAGE);
+			else {
+				new Thread() {
+					@Override
+					public void run() {
+						btnGenerateAndExport.setEnabled(false);
+						
+						lblActualStatus.setText("creando imagen...");
+						BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImageType.getBufferedImageType());
+						
+						lblActualStatus.setText("generando fractal...");
+						MandelbrotsetPosition position = new MandelbrotsetPosition();
+						position.setPosx((double)spinnerXAxis.getValue());
+						position.setPosy((double)spinnerYAxis.getValue());
+						position.setZoom((double)spinnerZoom.getValue());
+						position.setScale((double)spinnerScale.getValue());
+						MandelbrotsetGeneratorThreadManager.generate(image, (int)spinnerDepth.getValue(), (int)spinnerColorDepth.getValue(), position);
+						
+						lblActualStatus.setText("aplicando filtros...");
+						if (chckbxNegativeFilter.isSelected())
+							ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
+						if (chckbxGrayscaleFilter.isSelected())
+							ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
+						
+						
+						lblActualStatus.setText("exportación de archivo...");
+						FileSaver.saveFile(image, (ImageFormat)comboBoxFormat.getSelectedItem());
+						
+						lblActualStatus.setText("finalizado.");
+						
+						btnGenerateAndExport.setEnabled(true);
+					}
+				}.start();
+			}
 		});
+		
+		JPanel resolutionPresetsPanel = new JPanel();
+		resolutionPresetsPanel.setBorder(new TitledBorder(null, "Resoluciones predefinidas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -181,6 +229,9 @@ public class ExportToFilePanel extends JPanel {
 						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(resolutionPresetsPanel, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
 						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(filtersPanel, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
@@ -207,14 +258,52 @@ public class ExportToFilePanel extends JPanel {
 						.addComponent(positionPanel, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(filtersPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(resolutionPresetsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+					.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblStatus)
 						.addComponent(lblActualStatus))
 					.addContainerGap())
 		);
+		
+		GroupLayout gl_resolutionPresetsPanel = new GroupLayout(resolutionPresetsPanel);
+		gl_resolutionPresetsPanel.setHorizontalGroup(
+			gl_resolutionPresetsPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_resolutionPresetsPanel.createSequentialGroup()
+					.addGap(174)
+					.addComponent(btn720p, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btn1080p, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btn1440p, GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btn4k, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btn8k, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btn16k, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btn32k, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(161))
+		);
+		gl_resolutionPresetsPanel.setVerticalGroup(
+			gl_resolutionPresetsPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_resolutionPresetsPanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_resolutionPresetsPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btn1080p)
+						.addComponent(btn1440p)
+						.addComponent(btn4k)
+						.addComponent(btn8k)
+						.addComponent(btn16k)
+						.addComponent(btn32k)
+						.addComponent(btn720p))
+					.addContainerGap(32, Short.MAX_VALUE))
+		);
+		resolutionPresetsPanel.setLayout(gl_resolutionPresetsPanel);
 		
 		GroupLayout gl_filtersPanel = new GroupLayout(filtersPanel);
 		gl_filtersPanel.setHorizontalGroup(
@@ -360,5 +449,15 @@ public class ExportToFilePanel extends JPanel {
 				chckbxGrayscaleFilter.setSelected(activeFiltersStore.isGrayscaleFilterActive());
 			}
 		});
+	}
+	
+	private void changeCurrentResolution(int width, int height) {
+		spinnerZoom.setValue((double)spinnerZoom.getValue() * getResolutionMultiplier((int)spinnerWidth.getValue(), width));
+		spinnerWidth.setValue(width);
+		spinnerHeight.setValue(height);
+	}
+	
+	private double getResolutionMultiplier(int oldWidth, int newWidth) {
+		return Double.valueOf(newWidth) / Double.valueOf(oldWidth);
 	}
 }
