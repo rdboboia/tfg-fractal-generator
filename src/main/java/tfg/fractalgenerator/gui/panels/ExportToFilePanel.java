@@ -82,6 +82,9 @@ public class ExportToFilePanel extends JPanel {
 		JSpinner spinnerDepth = new JSpinner();
 		spinnerDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
 		
+		JSpinner spinnerColorDepth = new JSpinner();
+		spinnerColorDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
+		
 		JLabel lblFormat = new JLabel("Formato:");
 		
 		JComboBox<ImageFormat> comboBoxFormat = new JComboBox<>();
@@ -100,27 +103,24 @@ public class ExportToFilePanel extends JPanel {
 		JLabel lblEjeX = new JLabel("Eje x:");
 		
 		JSpinner spinnerXAxis = new JSpinner();
-		spinnerXAxis.setModel(new SpinnerNumberModel(0, null, null, 1));
+		spinnerXAxis.setModel(new SpinnerNumberModel(0d, null, null, 1d));
 		
 		JLabel lblEjeY = new JLabel("Eje y:");
 		
 		JSpinner spinnerYAxis = new JSpinner();
-		spinnerYAxis.setModel(new SpinnerNumberModel(0, null, null, 1));
+		spinnerYAxis.setModel(new SpinnerNumberModel(0d, null, null, 1d));
 		
 		JLabel lblZoom = new JLabel("Zoom:");
 		
 		JSpinner spinnerZoom = new JSpinner();
-		spinnerZoom.setModel(new SpinnerNumberModel(1, 1, null, 1));
+		spinnerZoom.setModel(new SpinnerNumberModel(1d, 1d, null, 1d));
 		
 		JLabel lblEscala = new JLabel("Escala:");
 		
 		JSpinner spinnerScale = new JSpinner();
-		spinnerScale.setModel(new SpinnerNumberModel(0.003125, null, null, 1));
+		spinnerScale.setModel(new SpinnerNumberModel(0.003125d, null, null, 1d));
 		
 		JLabel lblColores = new JLabel("Colores:");
-		
-		JSpinner spinnerColorDepth = new JSpinner();
-		spinnerColorDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
 		
 		JCheckBox chckbxGrayscaleFilter = new JCheckBox("Convert the colors to grayscale");
 		
