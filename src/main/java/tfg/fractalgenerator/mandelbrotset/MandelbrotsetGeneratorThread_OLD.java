@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * 
  * @author -$BOSS$-
  */
-public class MandelbrotsetGeneratorThread extends Thread {
+public class MandelbrotsetGeneratorThread_OLD extends Thread {
 	/**
 	 * The image where the Mandelbrot's Set fractal will be generated.
 	 */
@@ -61,7 +61,7 @@ public class MandelbrotsetGeneratorThread extends Thread {
 	 * @param threadID the thread id (from 0 to numThreads-1).
 	 * @param numThreads the total number of threads that will generate the fractal.
 	 */
-	public MandelbrotsetGeneratorThread(BufferedImage image, int depth, int colorDepth, MandelbrotsetPosition position, int threadID, int numThreads) {
+	public MandelbrotsetGeneratorThread_OLD(BufferedImage image, int depth, int colorDepth, MandelbrotsetPosition position, int threadID, int numThreads) {
 		this.image = image;
 		this.depth = depth;
 		this.colorDepth = colorDepth;
