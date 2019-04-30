@@ -163,7 +163,7 @@ public class ExportToFilePanel extends JPanel {
 		
 		JButton btn8k = new JButton("7680 x 4320 (8K)");
 		btn8k.addActionListener(e -> {
-			changeCurrentResolution(4680, 4320);
+			changeCurrentResolution(7680, 4320);
 		});
 		
 		JButton btn16k = new JButton("15360 x 8640 (16K)");
@@ -179,43 +179,39 @@ public class ExportToFilePanel extends JPanel {
 		JButton btnGenerateAndExport = new JButton("Generar y exportar");
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnGenerateAndExport.addActionListener(e -> {
-			double pixelCount = (int)spinnerWidth.getValue() * (int)spinnerHeight.getValue();
-			
-			if (pixelCount > Double.MAX_VALUE || pixelCount < 0)
-				JOptionPane.showMessageDialog(this, "La resolución introducida es demasiado grande.", "Resolución no válida", JOptionPane.ERROR_MESSAGE);
-			else {
-				new Thread() {
-					@Override
-					public void run() {
+			new Thread() {
+				@Override
+				public void run() {
+					try {
 						btnGenerateAndExport.setEnabled(false);
-						
+
 						lblActualStatus.setText("creando imagen...");
-						BufferedImage image = new BufferedImage((int)spinnerWidth.getValue(), (int)spinnerHeight.getValue(), BufferedImageType.getBufferedImageType());
-						
+						BufferedImage image = new BufferedImage((int) spinnerWidth.getValue(), (int) spinnerHeight.getValue(), BufferedImageType.getBufferedImageType());
+
 						lblActualStatus.setText("generando fractal...");
 						MandelbrotsetPosition position = new MandelbrotsetPosition();
-						position.setPosx((double)spinnerXAxis.getValue());
-						position.setPosy((double)spinnerYAxis.getValue());
-						position.setZoom((double)spinnerZoom.getValue());
-						position.setScale((double)spinnerScale.getValue());
-						MandelbrotsetGeneratorThreadManager.generate(image, (int)spinnerDepth.getValue(), (int)spinnerColorDepth.getValue(), position);
-						
+						position.setPosx((double) spinnerXAxis.getValue());
+						position.setPosy((double) spinnerYAxis.getValue());
+						position.setZoom((double) spinnerZoom.getValue());
+						position.setScale((double) spinnerScale.getValue());
+						MandelbrotsetGeneratorThreadManager.generate(image, (int) spinnerDepth.getValue(), (int) spinnerColorDepth.getValue(), position);
+
 						lblActualStatus.setText("aplicando filtros...");
 						if (chckbxNegativeFilter.isSelected())
 							ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
 						if (chckbxGrayscaleFilter.isSelected())
 							ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
-						
-						
+
 						lblActualStatus.setText("exportación de archivo...");
-						FileSaver.saveFile(image, (ImageFormat)comboBoxFormat.getSelectedItem());
-						
+						FileSaver.saveFile(image, (ImageFormat) comboBoxFormat.getSelectedItem());
+					} catch (IllegalArgumentException e) {
+						JOptionPane.showMessageDialog(null, "La resolución introducida es demasiado grande.", "Resolución no válida", JOptionPane.ERROR_MESSAGE);
+					} finally {
 						lblActualStatus.setText("finalizado.");
-						
 						btnGenerateAndExport.setEnabled(true);
 					}
-				}.start();
-			}
+				}
+			}.start();
 		});
 		
 		JPanel resolutionPresetsPanel = new JPanel();
