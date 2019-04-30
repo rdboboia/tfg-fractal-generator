@@ -204,8 +204,14 @@ public class ExportToFilePanel extends JPanel {
 
 						lblActualStatus.setText("exportación de archivo...");
 						FileSaver.saveFile(image, (ImageFormat) comboBoxFormat.getSelectedItem());
+						
+						// Frees up memory. Useful specially when exporting to very high resolution images.
+						image = null;
+						Runtime.getRuntime().gc();
 					} catch (IllegalArgumentException e) {
 						JOptionPane.showMessageDialog(null, "La resolución introducida es demasiado grande.", "Resolución no válida", JOptionPane.ERROR_MESSAGE);
+					} catch (OutOfMemoryError e) {
+						JOptionPane.showMessageDialog(null, "No hay suficiente memoria para generar el fractal con la resolución indicada.", "Memoria insuficiente", JOptionPane.ERROR_MESSAGE);
 					} finally {
 						lblActualStatus.setText("finalizado.");
 						btnGenerateAndExport.setEnabled(true);
