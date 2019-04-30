@@ -25,10 +25,7 @@ public class BufferedImageType {
 	 */
 	public static int getBufferedImageType() {
 		// Since the underlying data structure is an byte array, less elements can be stored before the array size limit is exceeded.
-		// So, there is a restriction in the image size.
+		// So, there is a grater restriction in the image size than using the TYPE_INT_RGB, for example.
 		return BufferedImage.TYPE_3BYTE_BGR;
-		
-		// More pixels can be stored, but they're more difficult to work with while applying filters.
-//		return BufferedImage.TYPE_INT_RGB;
 	}
 }

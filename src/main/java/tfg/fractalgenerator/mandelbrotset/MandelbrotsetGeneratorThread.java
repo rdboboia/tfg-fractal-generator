@@ -134,10 +134,6 @@ public class MandelbrotsetGeneratorThread extends Thread {
 					pixelData[i * 3 * width + 3 * j] = (byte) (value & 0xFF);
 					pixelData[i * 3 * width + 3 * j + 1] = (byte) (value >> 8 & 0xFF);
 					pixelData[i * 3 * width + 3 * j + 2] = (byte) (value >> 16 & 0xFF);
-					
-//					pixelData[i * 3 * width + 3 * j] = (byte) (value >> 16 & 0xFF);
-//					pixelData[i * 3 * width + 3 * j + 1] = (byte) (value >> 8 & 0xFF);
-//					pixelData[i * 3 * width + 3 * j + 2] = (byte) (value & 0xFF);
 				}
 				else {
 					pixelData[i * 3 * width + 3 * j] = 0;
