@@ -353,7 +353,8 @@ public class RealtimeViewPanelScalable extends JPanel {
 	 * @return the current horizontal center as a double value.
 	 */
 	private double getHorizontalCenter() {
-		return lblImageContainer.getWidth() / 2d;
+		// Not using lblImageContainer's position since the set width doesn't persist.
+		return this.getWidth() / 2d;
 	}
 	
 	/**
@@ -361,7 +362,8 @@ public class RealtimeViewPanelScalable extends JPanel {
 	 * @return the current vertical center as a double value.
 	 */
 	private double getVerticalCenter() {
-		return lblImageContainer.getHeight() / 2d;
+		// Not using lblImageContainer's position since the set width doesn't persist.
+		return (this.getHeight()-20) / 2d;
 	}
 	
 	/**
