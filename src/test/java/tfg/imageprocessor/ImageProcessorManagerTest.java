@@ -7,14 +7,12 @@ import java.awt.image.DataBufferByte;
 
 import org.junit.jupiter.api.Test;
 
-import tfg.fractalgenerator.exportimage.BufferedImageType;
-
 class ImageProcessorManagerTest {
 	private static final String ASSERTION_ERROR_MESSAGE = "Wrong value. Check if the executed mode is the expected one.";
 
 	@Test
 	void invertColorsTest() {
-		BufferedImage image = new BufferedImage(1000, 1200, BufferedImageType.getBufferedImageType());
+		BufferedImage image = new BufferedImage(1000, 1200, BufferedImage.TYPE_3BYTE_BGR);
 		byte[] bytes = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 		byte[] bytesCopy = bytes.clone();
 		
@@ -38,7 +36,7 @@ class ImageProcessorManagerTest {
 	
 	@Test
 	void convertToGrayscaleTest() {
-		BufferedImage image = new BufferedImage(1000, 1200, BufferedImageType.getBufferedImageType());
+		BufferedImage image = new BufferedImage(1000, 1200, BufferedImage.TYPE_3BYTE_BGR);
 		byte[] bytes = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 		byte[] bytesCopy = bytes.clone();
 		

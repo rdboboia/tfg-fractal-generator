@@ -77,12 +77,9 @@ class ImageProcessorTest {
 		ImageProcessor.convertToGrayscale(bytes, step);
 		
 		for (int i = 0; i < bytesCopy.length; i += step) {
-			int sum = 0;
-			
-			for (int j = 0 ; j < step ; j++)
-				sum += (bytesCopy[i+j] & ~-256);
-			
-			sum /= step;
+			int sum = (int) ((bytesCopy[i] & ~-256) * 0.114);
+			sum += (int) ((bytesCopy[i+1] & ~-256) * 0.587);
+			sum += (int) ((bytesCopy[i+2] & ~-256) * 0.299);
 			
 			for (int j = 0 ; j < step ; j++) {
 				bytesCopy[i+j] = (byte) sum;
@@ -99,12 +96,9 @@ class ImageProcessorTest {
 		ImageProcessor.convertToGrayscale(bytes, step);
 		
 		for (int i = 0; i < bytesCopy.length; i += step) {
-			int sum = 0;
-			
-			for (int j = 0 ; j < step ; j++)
-				sum += (bytesCopy[i+j] & ~-256);
-			
-			sum /= step;
+			int sum = (int) ((bytesCopy[i] & ~-256) * 0.114);
+			sum += (int) ((bytesCopy[i+1] & ~-256) * 0.587);
+			sum += (int) ((bytesCopy[i+2] & ~-256) * 0.299);
 			
 			for (int j = 0 ; j < step ; j++) {
 				bytesCopy[i+j] = (byte) sum;
