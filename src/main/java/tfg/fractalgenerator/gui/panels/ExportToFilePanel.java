@@ -60,6 +60,7 @@ public class ExportToFilePanel extends JPanel {
 		this.setName(NAME);
 		
 		JButton btnReturn = new JButton("Volver");
+		btnReturn.setToolTipText("Volver al panel de selección de modo.");
 		btnReturn.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
 		
 		JLabel lblStatus = new JLabel("Estado:");
@@ -69,74 +70,98 @@ public class ExportToFilePanel extends JPanel {
 		lblActualStatus.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblResolution = new JLabel("Resolución:");
+		lblResolution.setToolTipText("Tamaño en píxeles de la imagen a exportar.");
 		
 		spinnerWidth = new JSpinner();
+		spinnerWidth.setToolTipText("Anchura en píxeles.");
 		spinnerWidth.setModel(new SpinnerNumberModel(3840, 1, null, 1));
 		
 		JLabel lblWidth = new JLabel("(ancho)");
 		lblWidth.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		spinnerHeight = new JSpinner();
+		spinnerHeight.setToolTipText("Altura en píxeles.");
 		spinnerHeight.setModel(new SpinnerNumberModel(2160, 1, null, 1));
 		
 		JLabel lblHeight = new JLabel("(alto)");
 		lblHeight.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JSpinner spinnerDepth = new JSpinner();
+		spinnerDepth.setToolTipText("Máximo número de iteraciones por píxel. Valores más altos requerirán de mayor tiempo de generación.");
 		spinnerDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
 		
 		JSpinner spinnerColorDepth = new JSpinner();
+		spinnerColorDepth.setToolTipText("Define el número de colores y cuándo aparecen en realción a la profunidad.");
 		spinnerColorDepth.setModel(new SpinnerNumberModel(360, 1, null, 1));
 		
 		JLabel lblFormat = new JLabel("Formato:");
+		lblFormat.setToolTipText("Formato de la imagen a exportar. Se recomienda PNG ya que es un formato comprimido sin pérdida de calidad.");
 		
 		JComboBox<ImageFormat> comboBoxFormat = new JComboBox<>();
+		comboBoxFormat.setToolTipText("Formato de la imagen a exportar. Se recomienda PNG ya que es un formato comprimido sin pérdida de calidad.");
 		comboBoxFormat.setModel(new DefaultComboBoxModel<ImageFormat>(ImageFormat.values()));
 		comboBoxFormat.setSelectedIndex(comboBoxFormat.getModel().getSize()-1);
 		
 		JLabel lblDepth = new JLabel("Profundidad:");
+		lblDepth.setToolTipText("Máximo número de iteraciones por píxel. Valores más altos requerirán de mayor tiempo de generación.");
 		
 		JLabel lblProfundidadColor = new JLabel("Profundidad color:");
+		lblProfundidadColor.setToolTipText("Define el número de colores y cuándo aparecen en realción a la profunidad.");
 		
 		JPanel propertiesPanel = new JPanel();
+		propertiesPanel.setToolTipText("Panel de propiedades. Define las características de la imagen a generar y exportar.");
 		propertiesPanel.setBorder(new TitledBorder(null, "Propiedades", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JPanel positionPanel = new JPanel();
+		positionPanel.setToolTipText("Panel de la posición del fractal. Define la posición y zoom a partir de los cuales se va a generar el fractal. Los valores máximos para la posición son de -2 a +2. Todos los campos pueden tener decimales.");
 		positionPanel.setBorder(new TitledBorder(null, "Posici\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JPanel filtersPanel = new JPanel();
+		filtersPanel.setToolTipText("Panel de filtros. Define que filtros se aplicarán una vez generado el fractal.");
 		filtersPanel.setBorder(new TitledBorder(null, "Filters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JLabel lblYAxis = new JLabel("Eje x:");
+		lblYAxis.setToolTipText("Posición en el eje X.");
 		
 		JSpinner spinnerXAxis = new JSpinner();
+		spinnerXAxis.setToolTipText("Posición en el eje X.");
 		spinnerXAxis.setModel(new SpinnerNumberModel(0d, null, null, 1d));
 		
 		JLabel lblXAxis = new JLabel("Eje y:");
+		lblXAxis.setToolTipText("Posición en el eje Y.");
 		
 		JSpinner spinnerYAxis = new JSpinner();
+		spinnerYAxis.setToolTipText("Posición en el eje Y.");
 		spinnerYAxis.setModel(new SpinnerNumberModel(0d, null, null, 1d));
 		
 		JLabel lblZoom = new JLabel("Zoom:");
+		lblZoom.setToolTipText("Nivel de zoom.");
 		
 		spinnerZoom = new JSpinner();
+		spinnerZoom.setToolTipText("Nivel de zoom.");
 		spinnerZoom.setModel(new SpinnerNumberModel(256d, 1d, null, 1d));
 		
 		JLabel lblScale = new JLabel("Escala:");
+		lblScale.setToolTipText("Nivel de escala.");
 		
 		JSpinner spinnerScale = new JSpinner();
+		spinnerScale.setToolTipText("Nivel de escala.");
 		spinnerScale.setModel(new SpinnerNumberModel(1d, null, null, 1d));
 		
-		JCheckBox chckbxGrayscaleFilter = new JCheckBox("Convert the colors to grayscale");
+		JCheckBox chckbxGrayscaleFilter = new JCheckBox("Convertir a escala de grises");
+		chckbxGrayscaleFilter.setToolTipText("Habilitar/Deshabilitar el filtro de conversión a escala de grises.");
 		
-		JCheckBox chckbxNegativeFilter = new JCheckBox("Invert the colors");
+		JCheckBox chckbxNegativeFilter = new JCheckBox("Invertir los colores");
+		chckbxNegativeFilter.setToolTipText("Habilitar/Deshabilitar el filtro de inversión de colores.");
 		
 		JButton btnDouble = new JButton("x2");
+		btnDouble.setToolTipText("Duplicar el nivel actual de zoom.");
 		btnDouble.addActionListener(e -> {
 			spinnerZoom.setValue((double)spinnerZoom.getValue() * 2);
 		});
 		
 		JButton btnHalf = new JButton("/2");
+		btnHalf.setToolTipText("Reducir a la mitad el nivel actual de zoom.");
 		btnHalf.addActionListener(e -> {
 			spinnerZoom.setValue((double)spinnerZoom.getValue() / 2);
 		});
@@ -177,6 +202,7 @@ public class ExportToFilePanel extends JPanel {
 		});
 		
 		JButton btnGenerateAndExport = new JButton("Generar y exportar");
+		btnGenerateAndExport.setToolTipText("Generar y exportar usando los parámetros definidos. Primero se generará el fractal y posteriormente se pedirá la ruta donde guardarlo. Nota: resoluciones muy altas consumen mucha memoria RAM.");
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnGenerateAndExport.addActionListener(e -> {
 			new Thread() {
@@ -221,6 +247,7 @@ public class ExportToFilePanel extends JPanel {
 		});
 		
 		JPanel resolutionPresetsPanel = new JPanel();
+		resolutionPresetsPanel.setToolTipText("Panel de resoluciones predefinidas. Se incluyen algunas resoluciones comunes y algunas adicionales de muy alta resolución. Estos botones ajustan automáticamente el nivel de zoom en función de la resolución seleccionada para que el fractal exportado sea el que se está visualizando desde el panel de visualización en tiempo real.");
 		resolutionPresetsPanel.setBorder(new TitledBorder(null, "Resoluciones predefinidas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		GroupLayout groupLayout = new GroupLayout(this);

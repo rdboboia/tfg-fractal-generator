@@ -154,14 +154,18 @@ public class RealtimeViewPanelScalable extends JPanel {
 		this.position = new MandelbrotsetPosition();
 		
 		JLabel lblDepth = new JLabel("Profunidad:");
+		lblDepth.setToolTipText("Máximo número de iteraciones por píxel. Valores más altos requerirán de mayor tiempo de generación.");
 		JLabel lblColorDepth = new JLabel("Profundidad color:");
-		lblColorDepth.setToolTipText("algo");
+		lblColorDepth.setToolTipText("Define el número de colores y cuándo aparecen en realción a la profunidad.");
 		JLabel lblStatus = new JLabel("Estado:");
+		lblStatus.setToolTipText("Estado actual del programa.");
 		
 		JButton btnReturn = new JButton("Volver");
+		btnReturn.setToolTipText("Volver al panel de selección de modo.");
 		btnReturn.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ModeSelectionPanel.NAME));
 		
 		lblCurrentStatus = new JLabel("finalizado.");
+		lblCurrentStatus.setToolTipText("Estado actual del programa.");
 		
 		lblImageContainer = new JLabel("");
 		lblImageContainer.addMouseListener(new MouseAdapter() {
@@ -187,12 +191,14 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		btnGenerate = new JButton("Generar");
+		btnGenerate.setToolTipText("Generar nuevamente el fractal.");
 		btnGenerate.addActionListener(e -> {
 			if (btnGenerate.isEnabled())
 				updateImage();
 		});
 		
 		btnExport = new JButton("Exportar");
+		btnExport.setToolTipText("Ir al panel de exportación para exportar el fractal que se está visualizando a fichero de imagen. Los campos se ajustarán automáticamente, pero se pueden usar los botones de resoluciones predefinidas para definir la resolución de la imagen a exportar.");
 		btnExport.setEnabled(false);
 		btnExport.addActionListener(e -> {
 			GenerationParametersStore genParamStore = GenerationParametersStore.getInstance();
@@ -210,6 +216,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		btnZoomIn = new JButton("+");
+		btnZoomIn.setToolTipText("Aumentar el zoom manteniendo el la posición central actual.");
 		btnZoomIn.addActionListener(e -> {
 			if (btnGenerate.isEnabled()) {
 				zoomIn();
@@ -218,6 +225,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		btnZoomOut = new JButton("-");
+		btnZoomOut.setToolTipText("Disminuir el zoom manteniendo el la posición central actual.");
 		btnZoomOut.addActionListener(e -> {
 			if (btnGenerate.isEnabled()) {
 				zoomOut();
@@ -226,12 +234,14 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		btnRestoreDefaults = new JButton("Restablecer");
+		btnRestoreDefaults.setToolTipText("Restablecer parámetros por defecto (filtros, posición, zoom, profundidad...)");
 		btnRestoreDefaults.addActionListener(e -> {
 			restoreDefaultParameters();
 			updateImage();
 		});
 		
 		spinnerDepth = new JSpinner();
+		spinnerDepth.setToolTipText("Máximo número de iteraciones por píxel. Valores más altos requerirán de mayor tiempo de generación.");
 		spinnerDepth.setModel(new SpinnerNumberModel(360, 1, null, 32));
 		spinnerDepth.addChangeListener(e -> {
 			if (btnGenerate.isEnabled()) {
@@ -240,6 +250,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		spinnerColorDepth = new JSpinner();
+		spinnerColorDepth.setToolTipText("Define el número de colores y cuándo aparecen en realción a la profunidad.");
 		spinnerColorDepth.setModel(new SpinnerNumberModel(360, 1, null, 32));
 		spinnerColorDepth.addChangeListener(e -> {
 			if (btnGenerate.isEnabled()) {
@@ -248,6 +259,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		spinnerScale = new JSpinner();
+		spinnerScale.setToolTipText("Nivel de escala. Inversamente proporcional al zoom. Puede usarse un valor negativo (como -1) para visualizar el fractal invertido verticalmente.");
 		spinnerScale.setModel(new SpinnerNumberModel(1d, null, null, 1d));
 		spinnerScale.addChangeListener(e -> {
 			if (btnGenerate.isEnabled()) {
@@ -257,8 +269,10 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		lblScale = new JLabel("Escala:");
+		lblScale.setToolTipText("Nivel de escala. Inversamente proporcional al zoom. Puede usarse un valor negativo (como -1) para visualizar el fractal invertido verticalmente.");
 		
 		chckbxNegativeFilter = new JCheckBox("Invertir colores");
+		chckbxNegativeFilter.setToolTipText("Habilitar/Deshabilitar el filtro de inversión de colores.");
 		chckbxNegativeFilter.addActionListener(e -> {
 			if (btnGenerate.isEnabled()) {
 				toggleNegativeFilter();
@@ -266,6 +280,7 @@ public class RealtimeViewPanelScalable extends JPanel {
 		});
 		
 		chckbxGrayscaleFilter = new JCheckBox("Escala grises");
+		chckbxGrayscaleFilter.setToolTipText("Habilitar/Deshabilitar el filtro de conversión a escala de grises.");
 		chckbxGrayscaleFilter.addActionListener(e -> {
 			if (btnGenerate.isEnabled()) {
 				toggleGrayscaleFilter();

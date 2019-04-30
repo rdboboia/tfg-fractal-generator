@@ -42,10 +42,12 @@ public class ModeSelectionPanel extends JPanel {
 		this.setName(NAME);
 		
 		JButton btnRealTimeView = new JButton("Visualización en tiempo real");
+		btnRealTimeView.setToolTipText("Ir al panel de visualización en tiempo real.");
 		btnRealTimeView.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnRealTimeView.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(RealtimeViewPanelScalable.NAME));
 		
 		JButton btnGenerateAndExport = new JButton("Solo exportar a imagen");
+		btnGenerateAndExport.setToolTipText("Ir al panel de exportación a fichero de imagen.");
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnGenerateAndExport.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ExportToFilePanel.NAME));
 		
