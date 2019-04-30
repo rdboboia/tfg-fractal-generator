@@ -3,7 +3,6 @@ package tfg.fractalgenerator.mandelbrotset;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
 
 /**
  * A simple module that generates the Mandelbrot Set and stores it in a given
