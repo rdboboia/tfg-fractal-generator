@@ -107,12 +107,12 @@ public class ExportToFilePanel extends JPanel {
 		JPanel filtersPanel = new JPanel();
 		filtersPanel.setBorder(new TitledBorder(null, "Filters", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
-		JLabel lblEjeX = new JLabel("Eje x:");
+		JLabel lblYAxis = new JLabel("Eje x:");
 		
 		JSpinner spinnerXAxis = new JSpinner();
 		spinnerXAxis.setModel(new SpinnerNumberModel(0d, null, null, 1d));
 		
-		JLabel lblEjeY = new JLabel("Eje y:");
+		JLabel lblXAxis = new JLabel("Eje y:");
 		
 		JSpinner spinnerYAxis = new JSpinner();
 		spinnerYAxis.setModel(new SpinnerNumberModel(0d, null, null, 1d));
@@ -122,7 +122,7 @@ public class ExportToFilePanel extends JPanel {
 		spinnerZoom = new JSpinner();
 		spinnerZoom.setModel(new SpinnerNumberModel(256d, 1d, null, 1d));
 		
-		JLabel lblEscala = new JLabel("Escala:");
+		JLabel lblScale = new JLabel("Escala:");
 		
 		JSpinner spinnerScale = new JSpinner();
 		spinnerScale.setModel(new SpinnerNumberModel(1d, null, null, 1d));
@@ -131,13 +131,13 @@ public class ExportToFilePanel extends JPanel {
 		
 		JCheckBox chckbxNegativeFilter = new JCheckBox("Invert the colors");
 		
-		JButton btnX = new JButton("x2");
-		btnX.addActionListener(e -> {
+		JButton btnDouble = new JButton("x2");
+		btnDouble.addActionListener(e -> {
 			spinnerZoom.setValue((double)spinnerZoom.getValue() * 2);
 		});
 		
-		JButton button = new JButton("/2");
-		button.addActionListener(e -> {
+		JButton btnHalf = new JButton("/2");
+		btnHalf.addActionListener(e -> {
 			spinnerZoom.setValue((double)spinnerZoom.getValue() / 2);
 		});
 		
@@ -329,18 +329,18 @@ public class ExportToFilePanel extends JPanel {
 					.addContainerGap()
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblZoom)
-						.addComponent(lblEscala)
-						.addComponent(lblEjeY)
-						.addComponent(lblEjeX))
+						.addComponent(lblScale)
+						.addComponent(lblXAxis)
+						.addComponent(lblYAxis))
 					.addGap(31)
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(spinnerXAxis, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
 						.addComponent(spinnerYAxis, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
 						.addComponent(spinnerScale, GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
 						.addGroup(gl_positionPanel.createSequentialGroup()
-							.addComponent(btnX)
+							.addComponent(btnDouble)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(button)
+							.addComponent(btnHalf)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(spinnerZoom, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)))
 					.addContainerGap())
@@ -350,21 +350,21 @@ public class ExportToFilePanel extends JPanel {
 				.addGroup(gl_positionPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEjeX)
+						.addComponent(lblYAxis)
 						.addComponent(spinnerXAxis, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEjeY)
+						.addComponent(lblXAxis)
 						.addComponent(spinnerYAxis, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblZoom)
 						.addComponent(spinnerZoom, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnX)
-						.addComponent(button))
+						.addComponent(btnDouble)
+						.addComponent(btnHalf))
 					.addGap(18)
 					.addGroup(gl_positionPanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblEscala)
+						.addComponent(lblScale)
 						.addComponent(spinnerScale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(29, Short.MAX_VALUE))
 		);
