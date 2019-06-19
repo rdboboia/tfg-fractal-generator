@@ -51,8 +51,10 @@ public class FileSaver {
 			String directory = d.getDirectory();
 			String format = ImageFormatParser.getImageFormat(imageFormat);
 			
+			fileName = removeFileExtensionIfAlreadyExists(fileName, format);
+			
 			try {
-				if (Paths.get(directory + "\\" + fileName).toFile().exists()) {
+				if (Paths.get(directory + "\\" + fileName + "." + format).toFile().exists()) {
 					if (JOptionPane.showConfirmDialog(null, "¿Desea sobreescribir el archivo?", "El archivo ya existe", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 						ImageExport.export(image, imageFormat, directory, fileName, true);
 						checkFile(d.getDirectory(), d.getFile(), format);
