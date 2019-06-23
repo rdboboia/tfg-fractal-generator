@@ -236,7 +236,9 @@ public class RealtimeViewPanelScalable extends JPanel {
 		btnRestoreDefaults = new JButton("Restablecer");
 		btnRestoreDefaults.setToolTipText("Restablecer parámetros por defecto (filtros, posición, zoom, profundidad...)");
 		btnRestoreDefaults.addActionListener(e -> {
+			btnGenerate.setEnabled(false);
 			restoreDefaultParameters();
+			btnGenerate.setEnabled(true);
 			updateImage();
 		});
 		
