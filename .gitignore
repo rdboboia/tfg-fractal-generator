@@ -24,3 +24,6 @@ hs_err_pid*
 
 # Maven's target foulder
 target/
+
+# Include the exported JAR
+!fractalgenerator-*.jar
