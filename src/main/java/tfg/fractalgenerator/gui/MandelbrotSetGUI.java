@@ -105,7 +105,7 @@ public class MandelbrotSetGUI extends JFrame {
 	 * loaded a error message is shown to the user.
 	 */
 	private MandelbrotSetGUI() {
-		this.setTitle("Generador del Conjunto de Mandelbrot (v 1.1.2)");
+		this.setTitle("Generador del Conjunto de Mandelbrot (v 1.1.3)");
 		this.setMinimumSize(new Dimension(0, 80));
 		this.setSize(size);
 		
