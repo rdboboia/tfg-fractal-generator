@@ -54,15 +54,14 @@ public class FileSaver {
 			fileName = removeFileExtensionIfAlreadyExists(fileName, format);
 			
 			try {
+				boolean override = false;
+				
 				if (Paths.get(directory + "\\" + fileName + "." + format).toFile().exists()) {
-					if (JOptionPane.showConfirmDialog(null, "¿Desea sobreescribir el archivo?", "El archivo ya existe", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
-						ImageExport.export(image, imageFormat, directory, fileName, true);
-						checkFile(d.getDirectory(), d.getFile(), format);
-					}
-				} else {
-					ImageExport.export(image, imageFormat, d.getDirectory(), fileName, false);
-					checkFile(d.getDirectory(), d.getFile(), format);
+					override = JOptionPane.showConfirmDialog(null, "¿Desea sobreescribir el archivo?", "El archivo ya existe", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION;
 				}
+				
+				ImageExport.export(image, imageFormat, d.getDirectory(), fileName, override);
+				checkFile(d.getDirectory(), d.getFile(), format);
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(null, "No se pudo guardar el archivo.", "Error al guardar", JOptionPane.ERROR_MESSAGE);
 			}
