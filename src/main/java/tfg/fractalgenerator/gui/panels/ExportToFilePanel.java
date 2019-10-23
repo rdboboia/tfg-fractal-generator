@@ -50,6 +50,7 @@ public class ExportToFilePanel extends JPanel {
 	private JSpinner spinnerWidth;
 	private JSpinner spinnerHeight;
 	private JSpinner spinnerZoom;
+	private JLabel lblTime;
 	
 	/**
 	 * Initialization of the Panel and it's layout.
@@ -210,10 +211,15 @@ public class ExportToFilePanel extends JPanel {
 				public void run() {
 					try {
 						btnGenerateAndExport.setEnabled(false);
-
+						
+						long s;
+						
+						s = System.currentTimeMillis();
 						lblActualStatus.setText("creando imagen...");
 						BufferedImage image = new BufferedImage((int) spinnerWidth.getValue(), (int) spinnerHeight.getValue(), BufferedImageType.getBufferedImageType());
-
+						lblTime.setText("(creación de imagen: " + (System.currentTimeMillis() - s) + " ms).");
+						
+						s = System.currentTimeMillis();
 						lblActualStatus.setText("generando fractal...");
 						MandelbrotsetPosition position = new MandelbrotsetPosition();
 						position.setPosx((double) spinnerXAxis.getValue());
@@ -227,9 +233,11 @@ public class ExportToFilePanel extends JPanel {
 							ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
 						if (chckbxGrayscaleFilter.isSelected())
 							ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
-
+						lblTime.setText("(generación fractal y aplicación filtros: " + (System.currentTimeMillis() - s) + " ms).");
+						
 						lblActualStatus.setText("exportación de archivo...");
-						FileSaver.saveFile(image, (ImageFormat) comboBoxFormat.getSelectedItem());
+						s = FileSaver.saveFile(image, (ImageFormat) comboBoxFormat.getSelectedItem());
+						lblTime.setText("(exportación de archivo: " + s + " ms).");
 						
 						// Frees up memory. Useful specially when exporting to very high resolution images.
 						image = null;
@@ -250,27 +258,33 @@ public class ExportToFilePanel extends JPanel {
 		resolutionPresetsPanel.setToolTipText("Panel de resoluciones predefinidas. Se incluyen algunas resoluciones comunes y algunas adicionales de muy alta resolución. Estos botones ajustan automáticamente el nivel de zoom en función de la resolución seleccionada para que el fractal exportado sea el que se está visualizando desde el panel de visualización en tiempo real.");
 		resolutionPresetsPanel.setBorder(new TitledBorder(null, "Resoluciones predefinidas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
+		lblTime = new JLabel("(0 ms).");
+		lblTime.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(resolutionPresetsPanel, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(filtersPanel, GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE))
-						.addComponent(btnReturn, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblStatus)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblActualStatus, GroupLayout.DEFAULT_SIZE, 1195, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+							.addComponent(lblActualStatus, GroupLayout.PREFERRED_SIZE, 395, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 169, Short.MAX_VALUE)
+							.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 631, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(propertiesPanel, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -294,7 +308,8 @@ public class ExportToFilePanel extends JPanel {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblStatus)
-						.addComponent(lblActualStatus))
+						.addComponent(lblActualStatus)
+						.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		

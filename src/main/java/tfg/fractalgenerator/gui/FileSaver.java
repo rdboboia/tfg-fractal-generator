@@ -41,11 +41,15 @@ public class FileSaver {
 	 * It displays a file selector dialog, then it checks if the user selected
 	 * a file by checking if the file returned is {@code null}. If a file with
 	 * the same name already exists it prompts the user for override confirmation.
+	 * 
+	 * @return totalTime the total time (in millis) that the exporting took.
 	 */
-	public static void saveFile(BufferedImage image, ImageFormat imageFormat) {
+	public static long saveFile(BufferedImage image, ImageFormat imageFormat) {
 		FileDialog d = new FileDialog(new Frame(), "Guardar como");
 		d.setVisible(true);
-
+		
+		long totalTime = 0;
+		
 		String fileName = d.getFile();
 		if (fileName != null) {
 			String directory = d.getDirectory();
@@ -60,12 +64,17 @@ public class FileSaver {
 					override = JOptionPane.showConfirmDialog(null, "¿Desea sobreescribir el archivo?", "El archivo ya existe", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION;
 				}
 				
+				long startTime = System.currentTimeMillis();
 				ImageExport.export(image, imageFormat, d.getDirectory(), fileName, override);
+				totalTime = System.currentTimeMillis() - startTime;
+				
 				checkFile(d.getDirectory(), d.getFile(), format);
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(null, "No se pudo guardar el archivo.", "Error al guardar", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		
+		return totalTime;
 	}
 	
 	/**
