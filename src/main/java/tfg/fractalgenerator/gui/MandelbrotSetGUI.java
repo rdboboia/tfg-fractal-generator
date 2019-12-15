@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import tfg.fractalgenerator.gui.panels.BenchmarkPanel;
 import tfg.fractalgenerator.gui.panels.ExportToFilePanel;
 import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 import tfg.fractalgenerator.gui.panels.RealtimeViewPanelScalable;
@@ -105,7 +106,7 @@ public class MandelbrotSetGUI extends JFrame {
 	 * loaded a error message is shown to the user.
 	 */
 	private MandelbrotSetGUI() {
-		this.setTitle("Generador del Conjunto de Mandelbrot (v 1.1.x)");
+		this.setTitle("Generador del Conjunto de Mandelbrot (v 1.2.x)");
 		this.setMinimumSize(new Dimension(0, 80));
 		this.setSize(size);
 		
@@ -128,6 +129,9 @@ public class MandelbrotSetGUI extends JFrame {
 		
 		JPanel fileOnlyPanel = new ExportToFilePanel();
 		contentPanel.add(fileOnlyPanel, fileOnlyPanel.getName());
+		
+		JPanel benchmarkPanel = new BenchmarkPanel();
+		contentPanel.add(benchmarkPanel, benchmarkPanel.getName());
 		
 		panels = new ArrayList<>();
 		Component[] components = contentPanel.getComponents();
