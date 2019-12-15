@@ -39,7 +39,7 @@ public class MandelbrotsetGeneratorThreadManager {
 		// Using only 90% of the total available threads in order to avoid locking up the system.
 		int numThreads = (int) Math.max(1, Runtime.getRuntime().availableProcessors() * 0.9);
 		
-		return (generate(image, depth, colorDepth, position, numThreads));
+		return generate(image, depth, colorDepth, position, numThreads);
 	}
 	
 	/**
