@@ -76,7 +76,7 @@ public class BenchmarkPanel extends JPanel {
 	/**
 	 * Button for starting the generation process.
 	 */
-	private JButton btnGenerate;
+	private JButton btnStart;
 	
 	/**
 	 * A simple text container to inform the user of the application's current status.
@@ -103,10 +103,10 @@ public class BenchmarkPanel extends JPanel {
 		
 		lblImageContainer = new JLabel("");
 		
-		btnGenerate = new JButton("Generar");
-		btnGenerate.setToolTipText("Generar nuevamente el fractal.");
-		btnGenerate.addActionListener(e -> {
-			if (btnGenerate.isEnabled())
+		btnStart = new JButton("Iniciar");
+		btnStart.setToolTipText("Generar nuevamente el fractal.");
+		btnStart.addActionListener(e -> {
+			if (btnStart.isEnabled())
 				updateImage();
 		});
 		
@@ -117,7 +117,7 @@ public class BenchmarkPanel extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(118)
-							.addComponent(btnGenerate))
+							.addComponent(btnStart))
 						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 					.addGap(99)
 					.addComponent(lblStatus)
@@ -131,7 +131,7 @@ public class BenchmarkPanel extends JPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnReturn)
-						.addComponent(btnGenerate)
+						.addComponent(btnStart)
 						.addComponent(lblStatus)
 						.addComponent(lblCurrentStatus))
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -147,7 +147,7 @@ public class BenchmarkPanel extends JPanel {
 	 * @param setEnabled the state to be set (enabled: true; disabled: false).
 	 */
 	private void changeControlsState(boolean setEnabled) {
-		btnGenerate.setEnabled(setEnabled);
+		btnStart.setEnabled(setEnabled);
 	}
 	
 	/**
@@ -156,10 +156,17 @@ public class BenchmarkPanel extends JPanel {
 	 * grayscale filter.
 	 */
 	private void applyFilters() {
+		long s, f;
+		
+		s = System.currentTimeMillis(); // Start time
 		ImageProcessorManager.process(image, ProcessingMode.COLOR_INVERSION);
+		f = System.currentTimeMillis(); // Finish time
+		System.out.println("Filtro inversión: " + (f - s) + "ms.");
+		
+		s = System.currentTimeMillis(); // Start time
 		ImageProcessorManager.process(image, ProcessingMode.GRAYSCALE);
-
-		lblImageContainer.setIcon(new ImageIcon(image));
+		f = System.currentTimeMillis(); // Finish time
+		System.out.println("Filtro escala grises: " + (f - s) + "ms.");
 	}
 	
 	/**
@@ -169,7 +176,7 @@ public class BenchmarkPanel extends JPanel {
 	 * the intended {@code Threads} are created.
 	 */
 	private void updateImage() {
-		if (btnGenerate.isEnabled()) {
+		if (btnStart.isEnabled()) {
 			changeControlsState(false);
 			
 			lblCurrentStatus.setText("generando...");
@@ -185,18 +192,25 @@ public class BenchmarkPanel extends JPanel {
 			Thread generatorThread = new Thread() {
 				@Override
 				public void run() {
-					long s = System.currentTimeMillis(); // Start time
+					long s, f;
+					long sTotal, fTotal;
 					
 					position = new MandelbrotsetPosition();
 					position.setZoom(position.getZoom() * scaleFactor);
-					MandelbrotsetGeneratorThreadManager.generate(image, 360, 360, position);
+					
+					s = System.currentTimeMillis(); // Start time
+					sTotal = s;
+					MandelbrotsetGeneratorThreadManager.generate(image, 3600, 360, position, Runtime.getRuntime().availableProcessors());
+					f = System.currentTimeMillis(); // Finish time
+					System.out.println("Generación: " + (f - s) + "ms.");
 					
 					// Apply the currently selected image filters.
-//					applyFilters();
+					applyFilters();
 					
-					long f = System.currentTimeMillis(); // Finish time
+					fTotal = System.currentTimeMillis(); // Finish time
 					
-					lblCurrentStatus.setText("finalizado (" + (f - s) + " ms).");
+					lblCurrentStatus.setText("finalizado (" + (fTotal - sTotal) + " ms).");
+					System.out.println("Total: " + (fTotal - sTotal) + "ms.");
 					
 					changeControlsState(true);
 				}
@@ -222,8 +236,14 @@ public class BenchmarkPanel extends JPanel {
 						
 						lblImageContainer.setIcon(new ImageIcon(after));
 						
+						after = null;
+						System.gc();
+						
 //						lblImageContainer.setIcon(new ImageIcon(image));
 					}
+					
+					image = null;
+					System.gc();
 				}
 			};
 			updateImageThread.start();

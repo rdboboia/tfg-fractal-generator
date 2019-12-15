@@ -24,7 +24,7 @@ public class BufferedImageType {
 	 * class.
 	 */
 	public static int getBufferedImageType() {
-		// Since the underlying data structure is an byte array, less elements can be stored before the array size limit is exceeded.
+		// Since the underlying data structure is a byte array, less elements can be stored before the array size limit is exceeded.
 		// So, there is a restriction in the image size.
 		return BufferedImage.TYPE_3BYTE_BGR;
 		
