@@ -52,14 +52,15 @@ public class ModeSelectionPanel extends JPanel {
 		btnGenerateAndExport.setFont(new Font("Tahoma", Font.BOLD, 24));
 		btnGenerateAndExport.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(ExportToFilePanel.NAME));
 		
-		JButton btnBenchmark = new JButton("Benchmark");
-		btnBenchmark.setToolTipText("Ir al panel de visualización en tiempo real.");
-		btnBenchmark.setFont(new Font("Tahoma", Font.BOLD, 24));
-		btnBenchmark.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(BenchmarkPanel.NAME));
+		JButton btnSingleBench = new JButton("CPU MultiThreaded benchmark");
+		btnSingleBench.setToolTipText("Ir al panel de visualización en tiempo real.");
+		btnSingleBench.setFont(new Font("Tahoma", Font.BOLD, 24));
+		btnSingleBench.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(BenchmarkPanel.NAME));
 		
-		JButton btn = new JButton("<NOT_IMPLEMENTED_YET>");
-		btn.setToolTipText("Ir al panel de visualización en tiempo real.");
-		btn.setFont(new Font("Tahoma", Font.BOLD, 24));
+		JButton btnMultiBench = new JButton("CPU SingleThreaded benchmark");
+		btnMultiBench.setToolTipText("Ir al panel de visualización en tiempo real.");
+		btnMultiBench.setFont(new Font("Tahoma", Font.BOLD, 24));
+		btnMultiBench.addActionListener(e -> MandelbrotSetGUI.getInstance().changeCard(SingleThreadBenchmarkPanel.NAME));
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -71,12 +72,12 @@ public class ModeSelectionPanel extends JPanel {
 							.addComponent(btnRealTimeView, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
 							.addGap(10))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnBenchmark, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+							.addComponent(btnSingleBench, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
 							.addGap(10)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(btnGenerateAndExport, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
-						.addComponent(btn, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
+						.addComponent(btnMultiBench, GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -88,8 +89,8 @@ public class ModeSelectionPanel extends JPanel {
 						.addComponent(btnRealTimeView, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
 					.addGap(10)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnBenchmark, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
-						.addComponent(btn, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
+						.addComponent(btnSingleBench, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+						.addComponent(btnMultiBench, GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		setLayout(groupLayout);

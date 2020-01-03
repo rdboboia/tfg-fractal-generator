@@ -9,6 +9,7 @@ import tfg.fractalgenerator.gui.panels.BenchmarkPanel;
 import tfg.fractalgenerator.gui.panels.ExportToFilePanel;
 import tfg.fractalgenerator.gui.panels.ModeSelectionPanel;
 import tfg.fractalgenerator.gui.panels.RealtimeViewPanelScalable;
+import tfg.fractalgenerator.gui.panels.SingleThreadBenchmarkPanel;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -130,8 +131,11 @@ public class MandelbrotSetGUI extends JFrame {
 		JPanel fileOnlyPanel = new ExportToFilePanel();
 		contentPanel.add(fileOnlyPanel, fileOnlyPanel.getName());
 		
-		JPanel benchmarkPanel = new BenchmarkPanel();
-		contentPanel.add(benchmarkPanel, benchmarkPanel.getName());
+		JPanel multiBenchmarkPanel = new BenchmarkPanel();
+		contentPanel.add(multiBenchmarkPanel, multiBenchmarkPanel.getName());
+		
+		JPanel singleBenchmarkPanel = new SingleThreadBenchmarkPanel();
+		contentPanel.add(singleBenchmarkPanel, singleBenchmarkPanel.getName());
 		
 		panels = new ArrayList<>();
 		Component[] components = contentPanel.getComponents();
